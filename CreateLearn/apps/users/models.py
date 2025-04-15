@@ -41,6 +41,7 @@ class CustomUser(AbstractUser):
     phone = models.CharField(max_length=20, verbose_name="Телефон", blank=True)
     middle_name = models.CharField(max_length=150, verbose_name="Отчество", blank=True)
     date_of_birth = models.DateField(verbose_name="Дата рождения", null=True)
+    avatar = models.ImageField(upload_to="avatars/", blank=True, null=True, verbose_name="Аватар")
     role = models.CharField(
         max_length=10, choices=Role.choices, default=Role.STUDENT, verbose_name="Роль"
     )
@@ -65,9 +66,7 @@ class Student(models.Model):
     educational_institution = models.CharField(
         max_length=100, verbose_name="Учебное заведение", blank=True
     )
-    course = models.CharField(
-        max_length=10, choices=CourseLevel.choices, verbose_name="Курс"
-    )
+    course = models.CharField(max_length=10, choices=CourseLevel.choices, verbose_name="Курс")
 
 
 class SchoolStudent(models.Model):
@@ -78,9 +77,7 @@ class SchoolStudent(models.Model):
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     school = models.CharField(max_length=100, verbose_name="Школа", blank=True)
-    class_level = models.CharField(
-        max_length=5, choices=ClassLevel.choices, verbose_name="Класс"
-    )
+    class_level = models.CharField(max_length=5, choices=ClassLevel.choices, verbose_name="Класс")
 
 
 class Teacher(models.Model):
