@@ -1,1 +1,31 @@
-{{ form }}
+{% load static %}
+
+ <!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>
+      {% block title %}{% endblock %}
+    </title>
+</head>
+<body>
+  {% include "includes/header.html" %}
+
+    <main >
+        <div class="container" style="max-width: 100%; padding-left: 0px; padding-right: 0px; overflow: hidden;">
+          {% block content %}{% endblock %}
+        </div>
+    </main>
+
+  {% include "includes/footer.html" %}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+ 
