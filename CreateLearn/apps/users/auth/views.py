@@ -11,7 +11,8 @@ from .forms import CustomUserCreationForm, CustomLoginForm
 
 
 class RegisterView(CreateView):
-    template_name = "base.html"
+    # template_name = "base.html"
+    template_name = "registration/selection_regis.html"
     success_url = reverse_lazy("home")
     form_class = CustomUserCreationForm
 
@@ -20,7 +21,8 @@ class RegisterView(CreateView):
 
 
 class LoginUserView(LoginView):
-    template_name = "base.html"
+    # template_name = "base.html"
+    template_name = "registration/input.html"
     form_class = CustomLoginForm
     success_url = reverse_lazy("home")
 

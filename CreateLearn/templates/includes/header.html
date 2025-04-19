@@ -15,8 +15,13 @@
       </ul>
     </div>
     <div class="menu-icon">
-        <a href="/">
-          <button class="button-icon"><img src="{% static 'img/icon.png' %}" width="50" height="40px" style="margin-right: 30px;"></button>
+        <a href="{% url 'login' %}">
+          <button class="button-icon">
+            <div style="display: flex;">
+              <img src="{% static 'img/input.png' %}" width="50" height="45px">
+              <p style="margin-top: 10px; color: #fff;">Вход</p>
+            </div>
+          </button>
         </a>
       </div>
   </header>

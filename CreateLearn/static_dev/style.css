@@ -40,6 +40,11 @@ margin-right: 0;
     height: 60px;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
+    transition: 1s;
+}
+
+.button-icon p:hover{
+    color: #000;
 }
 
 .menu-icon{
@@ -82,6 +87,11 @@ margin-right: 0;
     padding: 10px 30px;
     margin-top: 2%;
     margin-left: 5%;
+    transition: 1s;
+}
+
+.button-start:hover{
+    color: #000;
 }
 
 .benefits{
@@ -153,6 +163,11 @@ margin-right: 0;
     padding: 5px 50px;
     margin-top: 5%;
     margin-left: 39%;
+    transition: 1s;
+}
+
+.button-start-course:hover{
+    color: #000;
 }
 
 .course-constructor{
@@ -214,6 +229,11 @@ margin-right: 0;
     padding: 5px 50px;
     margin-top: 3%;
     margin-left: 35%;
+    transition: 1s;
+}
+
+.button-start-course-constructor:hover{
+    color: #000;
 }
 
 

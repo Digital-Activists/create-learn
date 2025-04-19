@@ -1,0 +1,27 @@
+{% extends 'registration/base_regist.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="input-section">
+        <div class="login-form">
+            <div class="form-content">
+                <div class="header">
+                    <button class="login-button">Вход</button>
+                </div>
+                <label for="email" style="display: block; margin-top: 40px;">E-mail</label>
+                <input type="email" id="email" placeholder="Ваш e-mail" class="form-control">
+
+                <label for="password" style="display: block;">Пароль</label>
+                <input type="password" id="password" placeholder="Ваш пароль">
+
+                <a href="#" class="forgot-password">Забыли пароль?</a>
+
+                <button class="submit-button">Войти</button>
+
+                <div class="footer">
+                    Нет аккаунта? <a href="{% url 'register' %}" class="register-link">Зарегистрироваться</a>
+                </div>
+            </div>
+    </section>
+{% endblock %}
