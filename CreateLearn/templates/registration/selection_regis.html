@@ -5,7 +5,7 @@
 
 {% block content %}
     <div class="selection-div">
-        <a href="/"><button class="selection-button"><img src="{% static 'img/card-stud.png' %}"></button></a>
-        <a href="/"><button class="selection-button"><img src="{% static 'img/card-prof.png' %}" height="370px"></button></a>
+        <a href="{% url "register_student" %}"><button class="selection-button"><img src="{% static 'img/card-stud.png' %}"></button></a>
+        <a href="{% url "register_teacher" %}"><button class="selection-button"><img src="{% static 'img/card-prof.png' %}" height="370px"></button></a>
     </div>
 {% endblock %}

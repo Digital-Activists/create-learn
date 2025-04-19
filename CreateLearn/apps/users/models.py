@@ -6,7 +6,6 @@ from django.contrib.auth.models import BaseUserManager
 class Role(models.TextChoices):
     TEACHER = "TEACHER", "Учитель"
     STUDENT = "STUDENT", "Студент"
-    SCHOOL_STUDENT = "SCHOOL", "Школьник"
     ADMIN = "ADMIN", "Администратор"
 
 
@@ -62,22 +61,21 @@ class Student(models.Model):
         YEAR_5_6 = "5-6", "5-6 курс(специалитет)"
         MASTER = "MASTER", "магистратура(любой курс)"
 
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    educational_institution = models.CharField(
-        max_length=100, verbose_name="Учебное заведение", blank=True
-    )
-    course = models.CharField(max_length=10, choices=CourseLevel.choices, verbose_name="Курс")
-
-
-class SchoolStudent(models.Model):
     class ClassLevel(models.TextChoices):
         CLASS_5_6 = "5-6", "5-6 класс"
         CLASS_7_9 = "7-9", "7-9 класс"
         CLASS_10_11 = "10-11", "10-11 класс"
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    school = models.CharField(max_length=100, verbose_name="Школа", blank=True)
-    class_level = models.CharField(max_length=5, choices=ClassLevel.choices, verbose_name="Класс")
+    educational_institution = models.CharField(
+        max_length=100, verbose_name="Учебное заведение", blank=True
+    )
+    course = models.CharField(
+        max_length=10, choices=CourseLevel.choices, blank=True, verbose_name="Курс"
+    )
+    class_level = models.CharField(
+        max_length=5, choices=ClassLevel.choices, blank=True, verbose_name="Класс"
+    )
 
 
 class Teacher(models.Model):
@@ -99,4 +97,7 @@ class Teacher(models.Model):
     about_oneself = models.TextField(verbose_name="О себе", blank=True)
     teaching_subjects = models.CharField(
         max_length=100, verbose_name="Преподаваемые предметы", blank=True
+    )
+    qualification = models.CharField(
+        max_length=100, verbose_name="Квалификация/Образование", blank=True
     )
