@@ -5,17 +5,13 @@ from .views import (
     RegisterStudentView,
     ProfileFillStudentView,
     ProfileFillTeacherView,
+    logout_user,
 )
 from django.urls import include, path
 from django.http import HttpResponse
 
-# from rest_framework.routers import DefaultRouter
-
-# router = DefaultRouter()
-# router.register(r"users", UserViewSet)
-
 urlpatterns = [
-    # path("users", include(router.urls)),
+    path("users/auth/logout", logout_user, name="logout"),
     path("users/auth/login", LoginUserView.as_view(), name="login"),
     path("users/auth/register/choice", RegisterChoiceView.as_view(), name="register"),
     path("users/auth/register/teacher", RegisterTeacherView.as_view(), name="register_teacher"),

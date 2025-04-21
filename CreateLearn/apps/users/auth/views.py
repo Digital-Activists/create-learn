@@ -59,8 +59,14 @@ class ProfileFillStudentView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("home")
     form_class = ProfileFillStudentForm
 
+    def get(self, request, *args, **kwargs):
+        if hasattr(request.user, "teacher"):
+            return redirect("home")
+        return super().get(request, *args, **kwargs)
+
     def get_object(self, queryset=None):
-        return Student.objects.get(user=self.request.user)
+        object = Student.objects.get(user=self.request.user)
+        return object
 
 
 class ProfileFillTeacherView(LoginRequiredMixin, UpdateView):
@@ -69,8 +75,14 @@ class ProfileFillTeacherView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("home")
     form_class = ProfileFillTeacherForm
 
+    def get(self, request, *args, **kwargs):
+        if hasattr(request.user, "student"):
+            return redirect("home")
+        return super().get(request, *args, **kwargs)
+
     def get_object(self, queryset=None):
-        return Teacher.objects.get(user=self.request.user)
+        object = Teacher.objects.get(user=self.request.user)
+        return object
 
 
 class LoginUserView(LoginView):

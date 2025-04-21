@@ -1,4 +1,3 @@
-# from .serializers import UserSerializer
 from .models import CustomUser
 from .auth.views import (
     LoginUserView,
