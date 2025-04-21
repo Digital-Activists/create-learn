@@ -112,6 +112,7 @@ input[type="password"]:focus {
     background: none;
     border: none;
     transition: 1s;
+    outline: 0 !important;
 }
 
 .selection-button:hover {
@@ -122,4 +123,10 @@ input[type="password"]:focus {
     display: flex;
     justify-content: center;
     gap:200px;
+}
+
+.registration-h4{
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 20px;
 }

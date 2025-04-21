@@ -43,7 +43,7 @@ class RegisterStudentView(RegisterBaseView):
 
 
 class RegisterTeacherView(RegisterBaseView):
-    template_name = "registration/prof-regis1.html"
+    template_name = "registration/teac-regis1.html"
     success_url = reverse_lazy("profile_form_teacher")
 
     def form_valid(self, form):
