@@ -1,44 +1,37 @@
-{% extends 'registration/base_regist.html' %}
+{% extends 'registration/base_regist.html' %} {% load static %} {% block content %}
+<section class="input-section">
+    <div class="login-form">
+        <form method="post">
+            {% csrf_token %}
 
-{% load static %}
-
-{% block content %}
-    <section class="input-section">
-        <div class="login-form">
-            <form method="post">
-                {% csrf_token %}
-
-                <div class="form-content">
-                    <div class="header">
-                        <button class="login-button">вход</button>
-                    </div>
-                    <label for="email" style="display: block; margin-top: 40px;">e-mail</label>
-                    {% comment %} <input type="email" name="username" id="email" placeholder="ваш e-mail" class="form-control"> {% endcomment %}
-                    {{ form.username }}
-                    {{ form.username.errors }}
-
-                    <label for="password" style="display: block;">пароль</label>
-                    {% comment %} <input type="password" name="password" id="password" placeholder="ваш пароль"> {% endcomment %}
-                    {{ form.password }}
-                    {{ form.password.errors }}
-
-                    <a href="#" class="forgot-password">забыли пароль?</a>
-                
-                    {% if form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        {% for error in form.non_field_errors %}
-                            {{ error }}
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-
-                    <button class="submit-button">войти</button>
-
-                    <div class="footer">
-                        нет аккаунта? <a href="{% url 'register' %}" class="register-link">зарегистрироваться</a>
-                    </div>
+            <div class="form-content">
+                <div class="header">
+                    <button class="login-button">вход</button>
                 </div>
-            </form>
-        </div>
-    </section>
+                <label for="email" style="display: block; margin-top: 40px">e-mail</label>
+                {% comment %}
+                <input type="email" name="username" id="email" placeholder="ваш e-mail" class="form-control" />
+                {% endcomment %} {{ form.username }} {{ form.username.errors }}
+
+                <label for="password" style="display: block">пароль</label>
+                {% comment %}
+                <input type="password" name="password" id="password" placeholder="ваш пароль" />
+                {% endcomment %} {{ form.password }} {{ form.password.errors }}
+
+                <a href="#" class="forgot-password">забыли пароль?</a>
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">{% for error in form.non_field_errors %} {{ error }} {% endfor %}</div>
+                {% endif %}
+
+                <button class="submit-button">войти</button>
+
+                <div class="footer">
+                    нет аккаунта?
+                    <a href="{% url 'register' %}" class="register-link">зарегистрироваться</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 {% endblock %}
