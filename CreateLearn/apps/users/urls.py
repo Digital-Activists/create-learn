@@ -6,9 +6,10 @@ from .views import (
     ProfileFillStudentView,
     ProfileFillTeacherView,
     logout_user,
+    SettingsProfileView,
+    SettingsSecurityView,
 )
 from django.urls import include, path
-from django.http import HttpResponse
 
 urlpatterns = [
     path("users/auth/logout", logout_user, name="logout"),
@@ -25,5 +26,15 @@ urlpatterns = [
         "users/auth/register/profile/teacher",
         ProfileFillTeacherView.as_view(),
         name="profile_form_teacher",
+    ),
+    path(
+        "users/settings/security",
+        SettingsSecurityView.as_view(),
+        name="settings_security",
+    ),
+    path(
+        "users/settings/profile",
+        SettingsProfileView.as_view(),
+        name="settings_profile",
     ),
 ]

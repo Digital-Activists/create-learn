@@ -1,4 +1,3 @@
-from .models import CustomUser
 from .auth.views import (
     LoginUserView,
     logout_user,
@@ -8,3 +7,4 @@ from .auth.views import (
     ProfileFillStudentView,
     ProfileFillTeacherView,
 )
+from .settings.views import SettingsSecurityView, SettingsProfileView

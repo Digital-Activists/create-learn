@@ -15,6 +15,10 @@
       </ul>
     </div>
     <div class="menu-icon">
+      {% if request.user.is_authenticated %}
+      {% comment %} Тут кнопки авторизованного пользователя {% endcomment %}
+      <a href="{% url 'logout' %}">Выйти из аккаунта</a>
+      {% else %}
         <a href="{% url 'login' %}">
           <button class="button-icon">
             <div style="display: flex;">
@@ -23,5 +27,6 @@
             </div>
           </button>
         </a>
+        {% endif %}
       </div>
   </header>

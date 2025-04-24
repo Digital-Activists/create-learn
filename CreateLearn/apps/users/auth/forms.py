@@ -8,9 +8,6 @@ from django.core.validators import RegexValidator
 
 
 class CustomUserCreationForm(UserCreationForm):
-    first_name = forms.CharField(label="Имя", max_length=150, required=True)
-    last_name = forms.CharField(label="Фамилия", max_length=150, required=True)
-    # middle_name = forms.CharField(label="Отчество", max_length=150)
     # phone = forms.CharField(
     #     label="Номер телефона",
     #     max_length=20,
@@ -22,19 +19,7 @@ class CustomUserCreationForm(UserCreationForm):
     #     ],
     #     widget=forms.TextInput(attrs={"placeholder": "+7 (999) 123-45-67", "type": "tel"}),
     # )
-    email = forms.EmailField(label="E-mail", widget=forms.EmailInput(attrs={}))
-    password1 = forms.CharField(
-        label="Пароль",
-        required=True,
-        strip=False,
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
-    )
-    password2 = forms.CharField(
-        label="Подтверждение пароля",
-        required=True,
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
-        strip=False,
-    )
+
     consent_personal_data_processing = forms.BooleanField(
         label="Согласие на обработку персональных данных",
         required=True,
@@ -51,19 +36,50 @@ class CustomUserCreationForm(UserCreationForm):
             "password2",
             "consent_personal_data_processing",
         )
+        labels = {
+            "first_name": "Имя",
+            "last_name": "Фамилия",
+            "email": "E-mail",
+            "password1": "Пароль",
+            "password2": "Подтверждение пароля",
+        }
+        widgets = {
+            "first_name": forms.TextInput(attrs={}),
+            "last_name": forms.TextInput(attrs={}),
+            "email": forms.EmailInput(attrs={}),
+            "password1": forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+            "password2": forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        }
 
 
 class CustomLoginForm(AuthenticationForm):
-    email = forms.EmailField(label="E-mail", widget=forms.EmailInput(attrs={"autofocus": True}))
+    username = forms.EmailField(
+        label="E-mail",
+        widget=forms.EmailInput(
+            attrs={
+                "autofocus": True,
+                "id": "email",
+                "placeholder": "Ваш e-mail",
+                "class": "form-control",
+            }
+        ),
+    )
+
     password = forms.CharField(
         label="Пароль",
         strip=False,
-        widget=forms.PasswordInput(attrs={"autocomplete": "current-password"}),
+        widget=forms.PasswordInput(
+            attrs={
+                "autocomplete": "current-password",
+                "id": "password",
+                "placeholder": "Ваш пароль",
+            }
+        ),
     )
 
-    class Meta:
-        model = CustomUser
-        fields = ["email", "password"]
+    def clean_username(self):
+        email = self.cleaned_data.get("username")
+        return email.lower()  # Нормализуем email к нижнему регистру
 
 
 class ProfileFillStudentForm(forms.ModelForm):
@@ -77,13 +93,13 @@ class ProfileFillStudentForm(forms.ModelForm):
         label="Курс",
         choices=Student.CourseLevel.choices,
         required=False,
-        widget=forms.TextInput(attrs={}),
+        widget=forms.Select(attrs={}),
     )
     class_level = forms.ChoiceField(
         label="Класс",
         choices=Student.ClassLevel.choices,
         required=False,
-        widget=forms.TextInput(attrs={}),
+        widget=forms.Select(attrs={}),
     )
 
     class Meta:
@@ -102,38 +118,3 @@ class ProfileFillStudentForm(forms.ModelForm):
             student.user.save()
             student.save()
         return student
-
-
-class ProfileFillTeacherForm(forms.ModelForm):
-    about_oneself = forms.CharField(
-        label="О себе",
-        widget=forms.Textarea(
-            attrs={
-                "rows": 4,
-            }
-        ),
-        required=False,
-        max_length=1000,
-    )
-    teaching_subjects = forms.CharField(
-        label="Преподаваемые предметы",
-        required=False,
-        max_length=100,
-        widget=forms.TextInput(attrs={}),
-    )
-    teaching_experience = forms.ChoiceField(
-        label="Опыт преподавания",
-        choices=Teacher.TeachingExperience.choices,
-        required=False,
-        widget=forms.TextInput(attrs={}),
-    )
-    qualification = forms.CharField(
-        label="Квалификация/Образование",
-        required=False,
-        max_length=100,
-        widget=forms.TextInput(attrs={}),
-    )
-
-    class Meta:
-        model = Teacher
-        fields = ("about_oneself", "teaching_subjects", "teaching_experience", "qualification")

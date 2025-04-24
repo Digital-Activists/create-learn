@@ -15,9 +15,8 @@ from ..models import Student, Teacher
 from .forms import (
     CustomUserCreationForm,
     CustomLoginForm,
-    ProfileFillStudentForm,
-    ProfileFillTeacherForm,
 )
+from ..settings.forms import ProfileFillStudentForm, ProfileFillTeacherForm
 
 
 class RegisterChoiceView(TemplateView):
