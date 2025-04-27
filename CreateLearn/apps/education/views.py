@@ -2,12 +2,15 @@ from django.shortcuts import render
 from django.views.generic import ListView
 
 from .models import Course, Lesson
+from .utils import SearchMixin
+from .forms import SearchCourseForm
 
 
-class CoursesListView(ListView):
+class CoursesListView(SearchMixin):
     model = Course
-    template_name = "base.html"
-    context_object_name = "courses"
+    form_class = SearchCourseForm
+    template_name = "test/test_list.html"
+    # context_object_name = "courses"
 
 
 class CourseDetailView(ListView):

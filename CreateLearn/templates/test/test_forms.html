@@ -1,0 +1,44 @@
+{% comment %} Шаблон для тестирования {% endcomment %}
+{% if form %}
+    <form method="post">
+        {% csrf_token %}
+        <h4>Форма</h4>
+        {{ form }}
+        <button type="submit">Нажать</button>
+    </form>
+{% endif %}
+
+{% if set_password_form %}
+    <form method="post">
+        {% csrf_token %}
+        <h4>Смена пароля</h4>
+        {{ set_password_form }}
+        <button type="submit">Изменить пароль</button>
+    </form>
+{% endif %}
+
+{% if user_info_form %}
+    <form method="post">
+        {% csrf_token %}
+        <h4>Изменение информации</h4>
+        {{ user_info_form }}
+        <button type="submit">Изменить логин</button>
+    </form>
+{% endif %}
+
+{% if set_email_form %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h4>Изменение email</h4>
+        {{ set_email_form }}
+        <button type="submit">Изменить</button>
+    </form>
+{% endif %}
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}

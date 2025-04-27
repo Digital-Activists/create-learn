@@ -19,7 +19,7 @@ class Course(models.Model):
     is_published = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.title
+        return f"{self.title}"
 
     def get_absolute_url(self):
         return reverse("courses", kwargs={"slug": self.slug})

@@ -30,11 +30,11 @@ urlpatterns = [
     path(
         "users/settings/security",
         SettingsSecurityView.as_view(),
-        name="settings_security",
+        name="users_settings_security",
     ),
     path(
         "users/settings/profile",
         SettingsProfileView.as_view(),
-        name="settings_profile",
+        name="users_settings_profile",
     ),
 ]

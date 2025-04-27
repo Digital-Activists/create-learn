@@ -1,145 +1,145 @@
-{% extends 'base.html' %} {% load static %} {% block title %}Главная страница{% endblock %} {% block content %} {% load
-static %}
-
-<section class="hero">
-    <h1 class="hero-p-1">Обучайся за 15 минут в день! Создавай курсы, которые захватывают!</h1>
-    <p class="hero-p-2">
-        Платформа для подготовки к экзаменам, созданная для успеха студентов и учеников, предлагает эффективные
-        инструменты обучения, а также предоставляет преподавателям мощный конструктор курсов для создания
-        персонализированных учебных материалов, что позволяет обеспечить всестороннюю и качественную подготовку к
-        экзаменам для всех пользователей.
-    </p>
-    <a href="{% url 'login' %}">
-        <button class="button-start">Начать обучение</button>
-    </a>
-</section>
-
-<section class="benefits">
-    <div style="display: flex; justify-content: center">
-        <div style="color: #1c154e">
-            <div style="display: block ruby">
-                <hr class="title-line" />
-                <h2 style="font-weight: bold">В чем преимущества микрообучения?</h2>
-                <hr class="title-line" />
-            </div>
-            <p style="font-size: 20px">Учитесь эффективно. Где угодно. Когда угодно.</p>
-        </div>
-    </div>
-    <!-- <img src="{% static 'img/icon1.png' %}" style="position: absolute; margin-right: auto;" > -->
-
-    <div class="row">
-        <div class="col-md-2">
-            <img src="{% static 'img/card1.png' %}" class="card-index" />
-        </div>
-        <div class="col-md-2">
-            <img src="{% static 'img/card2.png' %}" class="card-index" />
-        </div>
-        <div class="col-md-2">
-            <img src="{% static 'img/card3-1.png' %}" class="card-index" />
-        </div>
-        <div class="col-md-2">
-            <img src="{% static 'img/card4.png' %}" class="card-index" />
-        </div>
-        <div class="col-md-2">
-            <img src="{% static 'img/card5.png' %}" class="card-index" />
-        </div>
-    </div>
-
-    <img src="{% static 'img/icon2.png' %}" style="margin-left: 65%; margin-top: 5%" />
-</section>
-
-<section class="courses">
-    <div style="display: flex; justify-content: center">
-        <div style="color: #1c154e">
-            <div style="display: block ruby; text-align: center">
-                <hr class="title-line" style="width: 400px" />
-                <h2 style="font-weight: bold">Каталог онлайн-курсов!</h2>
-                <hr class="title-line" style="width: 400px" />
-            </div>
-            <p class="courses-p-1" style="color: #7359d9">Найдите то, что вам нужно!</p>
-            <p class="courses-p-2">
-                Получайте знания небольшими порциями, сдавайте тесты и запоминайте информацию с помощью флеш-карточек.
-                Подготовьтесь к экзаменам и закрепите полученные знания в увлекательных групповых соревнованиях!
-            </p>
-        </div>
-    </div>
-
-    <div class="row" style="width: 90%; margin-left: auto; margin-right: auto">
-        <div class="col-md-4">
-            <div class="course-card">
-                <img src="{% static 'img/course1.png' %}" class="card-course" />
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Главная страница{% endblock %}
+{% block content %}
+    <section class="hero">
+        <h1 class="hero-p-1">Обучайся за 15 минут в день! Создавай курсы, которые захватывают!</h1>
+        <p class="hero-p-2">
+            Платформа для подготовки к экзаменам, созданная для успеха студентов и учеников, предлагает эффективные
+            инструменты обучения, а также предоставляет преподавателям мощный конструктор курсов для создания
+            персонализированных учебных материалов, что позволяет обеспечить всестороннюю и качественную подготовку к
+            экзаменам для всех пользователей.
+        </p>
+        <a href="{% url 'login' %}">
+            <button class="button-start">Начать обучение</button>
+        </a>
+    </section>
+    <section class="benefits">
+        <div style="display: flex; justify-content: center">
+            <div style="color: #1c154e">
+                <div style="display: block ruby">
+                    <hr class="title-line" />
+                    <h2 style="font-weight: bold">В чем преимущества микрообучения?</h2>
+                    <hr class="title-line" />
+                </div>
+                <p style="font-size: 20px">Учитесь эффективно. Где угодно. Когда угодно.</p>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="course-card">
-                <img src="{% static 'img/course1.png' %}" class="card-course" />
+        <!-- <img src="{% static 'img/icon1.png' %}"
+      style="position: absolute;
+             margin-right: auto"> -->
+        <div class="row">
+            <div class="col-md-2">
+                <img src="{% static 'img/card1.png' %}" class="card-index" />
+            </div>
+            <div class="col-md-2">
+                <img src="{% static 'img/card2.png' %}" class="card-index" />
+            </div>
+            <div class="col-md-2">
+                <img src="{% static 'img/card3-1.png' %}" class="card-index" />
+            </div>
+            <div class="col-md-2">
+                <img src="{% static 'img/card4.png' %}" class="card-index" />
+            </div>
+            <div class="col-md-2">
+                <img src="{% static 'img/card5.png' %}" class="card-index" />
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="course-card">
-                <img src="{% static 'img/course1.png' %}" class="card-course" />
+        <img src="{% static 'img/icon2.png' %}"
+             style="margin-left: 65%;
+                    margin-top: 5%" />
+    </section>
+    <section class="courses">
+        <div style="display: flex; justify-content: center">
+            <div style="color: #1c154e">
+                <div style="display: block ruby; text-align: center">
+                    <hr class="title-line" style="width: 400px" />
+                    <h2 style="font-weight: bold">Каталог онлайн-курсов!</h2>
+                    <hr class="title-line" style="width: 400px" />
+                </div>
+                <p class="courses-p-1" style="color: #7359d9">Найдите то, что вам нужно!</p>
+                <p class="courses-p-2">
+                    Получайте знания небольшими порциями, сдавайте тесты и запоминайте информацию с помощью флеш-карточек.
+                    Подготовьтесь к экзаменам и закрепите полученные знания в увлекательных групповых соревнованиях!
+                </p>
             </div>
         </div>
-    </div>
-    <a href="{% url 'login' %}">
-        <button class="button-start-course">Показать все курсы</button>
-    </a>
-</section>
-
-<section class="course-constructor">
-    <div style="display: flex; justify-content: center">
-        <div style="color: #1c154e">
-            <div style="display: block ruby; text-align: center">
-                <hr class="title-line" style="width: 450px" />
-                <h2 style="font-weight: bold">Конструктор курсов</h2>
-                <hr class="title-line" style="width: 450px" />
+        <div class="row" style="width: 90%; margin-left: auto; margin-right: auto">
+            <div class="col-md-4">
+                <div class="course-card">
+                    <img src="{% static 'img/course1.png' %}" class="card-course" />
+                </div>
             </div>
-            <p class="course-constructor-p-1">Создайте свой шедевр микрообучения!</p>
-            <p class="course-constructor-p-2">
-                Создавайте интерактивные микрокурсы, проверяйте знания студентов с помощью тестов и вовлекайте их в
-                обучение благодаря системе мотивации и групповым соревнованиям.
-            </p>
+            <div class="col-md-4">
+                <div class="course-card">
+                    <img src="{% static 'img/course1.png' %}" class="card-course" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="course-card">
+                    <img src="{% static 'img/course1.png' %}" class="card-course" />
+                </div>
+            </div>
         </div>
-    </div>
-    <ul>
-        <li>
-            <div class="list-icon-div">
-                <img src="{% static 'img/list-icon.png' %}" class="list-icon" />
-                <h4>Интуитивно понятный интерфейс:</h4>
+        <a href="{% url 'login' %}">
+            <button class="button-start-course">Показать все курсы</button>
+        </a>
+    </section>
+    <section class="course-constructor">
+        <div style="display: flex; justify-content: center">
+            <div style="color: #1c154e">
+                <div style="display: block ruby; text-align: center">
+                    <hr class="title-line" style="width: 450px" />
+                    <h2 style="font-weight: bold">Конструктор курсов</h2>
+                    <hr class="title-line" style="width: 450px" />
+                </div>
+                <p class="course-constructor-p-1">Создайте свой шедевр микрообучения!</p>
+                <p class="course-constructor-p-2">
+                    Создавайте интерактивные микрокурсы, проверяйте знания студентов с помощью тестов и вовлекайте их в
+                    обучение благодаря системе мотивации и групповым соревнованиям.
+                </p>
             </div>
-            <p>Перетаскивайте элементы, добавляйте контент и создавайте свой курс за считанные минуты.</p>
-        </li>
-        <li>
-            <div class="list-icon-div">
-                <img src="{% static 'img/list-icon.png' %}" class="list-icon" />
-                <h4>Разнообразие форматов:</h4>
-            </div>
-            <p>Видео, текст, изображения, викторины, опросы.</p>
-        </li>
-        <li>
-            <div class="list-icon-div">
-                <img src="{% static 'img/list-icon.png' %}" class="list-icon" />
-                <h4>Интерактивные элементы:</h4>
-            </div>
-            <p>Тесты, задания, комментарии для вовлечения учеников.</p>
-        </li>
-        <li>
-            <div class="list-icon-div">
-                <img src="{% static 'img/list-icon.png' %}" class="list-icon" />
-                <h4>Аналитика и отчетность:</h4>
-            </div>
-            <p>Отслеживайте прогресс учеников и улучшайте свой курс.</p>
-        </li>
-        <li>
-            <div class="list-icon-div">
-                <img src="{% static 'img/list-icon.png' %}" class="list-icon" />
-                <h4>Монетизация:</h4>
-            </div>
-            <p>Продавайте свои курсы и зарабатывайте на своих знаниях.</p>
-        </li>
-    </ul>
-    <a href="{% url 'login' %}">
-        <button class="button-start-course-constructor">Попробовать конструктор курсов</button>
-    </a>
-</section>
+        </div>
+        <ul>
+            <li>
+                <div class="list-icon-div">
+                    <img src="{% static 'img/list-icon.png' %}" class="list-icon" />
+                    <h4>Интуитивно понятный интерфейс:</h4>
+                </div>
+                <p>Перетаскивайте элементы, добавляйте контент и создавайте свой курс за считанные минуты.</p>
+            </li>
+            <li>
+                <div class="list-icon-div">
+                    <img src="{% static 'img/list-icon.png' %}" class="list-icon" />
+                    <h4>Разнообразие форматов:</h4>
+                </div>
+                <p>Видео, текст, изображения, викторины, опросы.</p>
+            </li>
+            <li>
+                <div class="list-icon-div">
+                    <img src="{% static 'img/list-icon.png' %}" class="list-icon" />
+                    <h4>Интерактивные элементы:</h4>
+                </div>
+                <p>Тесты, задания, комментарии для вовлечения учеников.</p>
+            </li>
+            <li>
+                <div class="list-icon-div">
+                    <img src="{% static 'img/list-icon.png' %}" class="list-icon" />
+                    <h4>Аналитика и отчетность:</h4>
+                </div>
+                <p>Отслеживайте прогресс учеников и улучшайте свой курс.</p>
+            </li>
+            <li>
+                <div class="list-icon-div">
+                    <img src="{% static 'img/list-icon.png' %}" class="list-icon" />
+                    <h4>Монетизация:</h4>
+                </div>
+                <p>Продавайте свои курсы и зарабатывайте на своих знаниях.</p>
+            </li>
+        </ul>
+        <a href="{% url 'login' %}">
+            <button class="button-start-course-constructor">Попробовать конструктор курсов</button>
+        </a>
+    </section>
 {% endblock %}
