@@ -16,7 +16,13 @@ class SearchCourseForm(forms.ModelForm):
             if value:
                 query &= Q(**{lookup: value})
 
-        return self.Meta.objects.filter(query)
+        return self.Meta.model.objects.filter(query)
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        for field_name in self.Meta.search_fields.keys():
+            self.fields[field_name].required = False
 
     class Meta:
         model = Course

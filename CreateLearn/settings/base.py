@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "CreateLearn.apps.users",
     "CreateLearn.apps.education",
+    "CreateLearn.apps.core"
 ]
 
 MIDDLEWARE = [

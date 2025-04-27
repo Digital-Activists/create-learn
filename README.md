@@ -29,4 +29,36 @@ python manage.py runserver
 
 6. Перейти на сайт по http://127.0.0.1:8000/
 
+## Разработка
+
+### Makefile
+
+```sh
+# Старт сервера
+make run
+
+# Удаление файлов миграций и применение новых
+make resetmigrations
+
+# Сброс миграций, создание новых и старт сервера
+make reset-and-run
+```
+
+### Зависимости
+
+Опционально установить из `requirements_dev.txt`
+
+### Для заполнения БД
+
+Можно использовать
+
+```sh
+# Для заполнения всех приложений
+python manage.py fill_all_data
+
+# Для заполнения конкретных приложений
+python manage.py fill_users_data
+python manage.py fill_education_data
+```
+
 #### Проектный практикум - весна 2025

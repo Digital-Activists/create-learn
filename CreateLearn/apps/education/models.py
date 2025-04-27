@@ -2,18 +2,18 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.template.defaultfilters import slugify
+from django.contrib.auth import get_user_model
+from unidecode import unidecode
+
+User = get_user_model()
 
 
 class Course(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название курса")
     slug = models.SlugField(max_length=255, db_index=True, unique=True)
     description = models.TextField(blank=True, verbose_name="Описание курса")
-    creator = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="created_courses"
-    )
-    students = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name="enrolled_courses", blank=True
-    )
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created_courses")
+    students = models.ManyToManyField(User, related_name="enrolled_courses", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
@@ -26,7 +26,15 @@ class Course(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            creator_slug = slugify(unidecode(str(self.creator)))
+            title_slug = slugify(unidecode(self.title))
+
+            if not creator_slug or not title_slug:
+                raise ValueError(
+                    f"creator_slug: {creator_slug} and title_slug: {title_slug} must contain valid characters to generate a slug."
+                )
+
+            self.slug = f"{creator_slug}-{title_slug}"
         return super().save(*args, **kwargs)
 
 
@@ -59,7 +67,6 @@ class QuestionKind(models.TextChoices):
 
 
 class Question(models.Model):
-
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name="questions")
     condition = models.TextField(verbose_name="Условие вопроса", blank=True)
     order = models.PositiveIntegerField(default=0)
