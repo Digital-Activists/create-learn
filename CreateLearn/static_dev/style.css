@@ -242,5 +242,44 @@ margin-right: 0;
     display: flex;
     justify-content: space-between;
     margin-left: 10%;
-  margin-right: 10%;
+    margin-right: 10%;
 }
+
+.about{
+    background-image: linear-gradient(rgba(254, 254, 254, 0.7)), url('img/back.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.about-1{
+    padding-bottom: 10%;
+    padding-top: 5%;
+    border-bottom-left-radius: 150px;
+    background-color: #fff;
+}
+
+.about-2{
+    
+}
+
+.about-2 h2 {
+    color:#1c154e;
+    text-align: center;
+    font-weight: bold
+}
+
+.about_us-div{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: 2.5%;
+}
+
+.about-p{
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+
+

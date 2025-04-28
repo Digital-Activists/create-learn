@@ -34,3 +34,8 @@ class LessonDetailView(ListView):
 def index(request):
     template_name = "includes/index.html"
     return render(request, template_name)
+
+# страница "О нас"
+def about_us(request):
+    template_name = "includes/about_us.html"
+    return render(request, template_name)

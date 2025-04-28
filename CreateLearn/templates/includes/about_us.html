@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}О нас{% endblock %}
+{% block content %}
+<section class="about">
+    <section class="about-1">
+        <div style="display: flex; justify-content: center">
+            <div style="color: #1c154e">
+                <div style="display: block ruby; text-align: center">
+                    <hr class="title-line" style="width: 200px" />
+                    <h2 style="font-weight: bold">Учиться Легко. Создавать Легко. Расширяйте горизонты!</h2>
+                    <hr class="title-line" style="width: 200px" />
+                </div>
+                
+                <div style="margin-top: 2.5%; font-size: 24px;">
+                    <p class="about-p">
+                        Добро пожаловать! Здесь мы расскажем о том, что стоит за нашей миссией и как мы видим будущее онлайн-образования.
+                    </p>
+                    <p class="about-p">
+                        Мы — команда энтузиастов, объединенных идеей сделать подготовку к экзаменам не только эффективной, но и по-настоящему интересной, как для тех, кто учится, так и для тех, кто преподает.
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+        <div class="about_us-div">
+            <div>
+                <h2 style="color: #F28B57;">Наша цель:</h2>
+                <img src="{% static 'img/Arrow1.png' %}" style="margin-left: 100%;">
+            </div>
+            <div style="width: 50%; margin-top: 5%; font-size: 22px;">
+                <p>Предоставить каждому, кто стремится к знаниям, инструменты и возможности для достижения успеха, а каждому эксперту – платформу для реализации своего педагогического потенциала.</p>
+            </div>
+            <div>
+                <img src="{% static 'img/about1.png' %}" width="150px" height="150px" style="rotate: 22deg;">
+            </div>
+        </div>
+    </section>
+    <section class="about-2">
+        <div class="about_us-div">
+            <div>
+                <img src="{% static 'img/about2.png' %}" width="150px" height="150px" style="rotate: -22deg;">
+            </div>
+            <div>
+                <h2 style="color: #7359D9;">Наше видение:</h2>
+                <img src="{% static 'img/Arrow2.png' %}" style="margin-left: 100%;">
+            </div>
+            <div style="width: 50%; margin-top: 5%; font-size: 22px;">
+                <p>Мы верим, что онлайн-образование должно быть доступным, увлекательным и эффективным. Мы стремимся создать платформу, которая станет вашим надежным партнером на пути к знаниям и успеху.</p>
+            </div>
+        </div>
+        <div style="text-align: center; padding-top: 5%; padding-bottom: 5%;">
+            <h2>Учиться Легко. Создавать Легко. Расширяйте горизонты!</h2>
+            <a href="{% url 'login' %}">
+                <button class="button-start">Начать обучение</button>
+            </a>
+        </div>
+        
+    </section>
+</section>
+{% endblock %}
