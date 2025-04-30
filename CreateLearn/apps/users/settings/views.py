@@ -13,8 +13,8 @@ from .forms import SetEmailForm, UserInfoForm, CustomSetPasswordForm
 
 class SettingsSecurityView(SuccessMessageMixin, LoginRequiredMixin, TemplateView):
     model = CustomUser
-    template_name = "test.html"
-    success_url = reverse_lazy("settings_security")
+    template_name = "test/test_forms.html"
+    success_url = reverse_lazy("users_settings_security")
     login_url = reverse_lazy("login")
     success_message = "Изменения сохранены"
 

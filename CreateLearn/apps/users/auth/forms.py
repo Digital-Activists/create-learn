@@ -44,8 +44,8 @@ class CustomUserCreationForm(UserCreationForm):
             "password2": "Подтверждение пароля",
         }
         widgets = {
-            "first_name": forms.TextInput(attrs={}),
-            "last_name": forms.TextInput(attrs={}),
+            "first_name": forms.TextInput(attrs={"class": "form-control", "autofocus": True}),
+            "last_name": forms.TextInput(attrs={"class": "form-control"}),
             "email": forms.EmailInput(attrs={}),
             "password1": forms.PasswordInput(attrs={"autocomplete": "new-password"}),
             "password2": forms.PasswordInput(attrs={"autocomplete": "new-password"}),

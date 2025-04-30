@@ -9,7 +9,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Последовательность заполнения важна, если есть зависимости между моделями
         apps_to_fill = [
-            ("users", {"count": 30, "drop": False}),
+            ("users", {"count": 20, "drop": False}),
             ("education", {"courses": 15, "drop": False}),
         ]
 

@@ -54,7 +54,7 @@ class RegisterTeacherView(RegisterBaseView):
 
 class ProfileFillStudentView(LoginRequiredMixin, UpdateView):
     model = Student
-    template_name = "test.html"
+    template_name = "test/test_forms.html"
     success_url = reverse_lazy("home")
     form_class = ProfileFillStudentForm
 
@@ -70,7 +70,7 @@ class ProfileFillStudentView(LoginRequiredMixin, UpdateView):
 
 class ProfileFillTeacherView(LoginRequiredMixin, UpdateView):
     model = Teacher
-    template_name = "test.html"
+    template_name = "test/test_forms.html"
     success_url = reverse_lazy("home")
     form_class = ProfileFillTeacherForm
 

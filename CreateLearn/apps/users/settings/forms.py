@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth import update_session_auth_hash
 
 from ..models import CustomUser, Student, Teacher
 

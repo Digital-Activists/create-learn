@@ -7,7 +7,15 @@
             <div class="form-content">
                 <form method="post">
                     <h4 class="registration-h4">Регистрация студента/ученика</h4>
-                    {{ form }}
+                    {% for field in form %}
+                        <div class="field-wrapper">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="error">{{ field.errors }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
                     <button type="submit" class="submit-button">Продолжить</button>
                     {% csrf_token %}
                 </form>
