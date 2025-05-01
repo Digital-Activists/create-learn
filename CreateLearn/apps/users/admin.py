@@ -74,8 +74,6 @@ class CustomUserAdmin(UserAdmin):
             return [TeacherInline(self.model, self.admin_site)]
         elif obj and obj.role == "STUDENT":
             return [StudentInline(self.model, self.admin_site)]
-        elif obj and obj.role == "SCHOOL":
-            return [SchoolStudentInline(self.model, self.admin_site)]
         return []
 
 

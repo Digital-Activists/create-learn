@@ -18,12 +18,14 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.conf.urls.static import static
+from django.views.generic.base import RedirectView
 from django.urls import include, path
 
 urlpatterns = [
+    path("", RedirectView.as_view(pattern_name="home")),
     path("admin/", admin.site.urls),
-    path("", include("CreateLearn.apps.users.urls")),
-    path("", include("CreateLearn.apps.education.urls")),
+    path("users/", include("CreateLearn.apps.users.urls")),
+    path("education/", include("CreateLearn.apps.education.urls")),
 ]
 
 if settings.DEBUG:
