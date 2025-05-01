@@ -1,0 +1,7 @@
+{{ course }}
+
+{% for lesson in lessons %}
+    <li>
+        <a href="{{ lesson.get_absolute_url }}">{{ lesson }}</a>
+    </li>
+{% endfor %}

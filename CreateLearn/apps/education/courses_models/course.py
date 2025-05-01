@@ -24,7 +24,7 @@ class Course(models.Model):
         return f"{self.title}"
 
     def get_absolute_url(self):
-        return reverse("courses", kwargs={"slug": self.slug})
+        return reverse("course_details", kwargs={"slug": self.slug})
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -36,7 +36,7 @@ class Course(models.Model):
                     f"creator_slug: {creator_slug} and title_slug: {title_slug} must contain valid characters to generate a slug."
                 )
 
-            self.slug = f"{creator_slug}-{title_slug}"
+            self.slug = f"{title_slug}-{creator_slug}"
         return super().save(*args, **kwargs)
 
 

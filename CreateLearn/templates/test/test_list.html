@@ -4,10 +4,11 @@
         <button type="submit">Поиск</button>
     </form>
 {% endif %}
-
 {% if object_list is not None %}
     {% for obj in object_list %}
-        <li>{{ obj }}</li>
+        <li>
+            <a href="{{ obj.get_absolute_url }}">{{ obj }}</a>
+        </li>
     {% empty %}
         <li>No objects yet.</li>
     {% endfor %}

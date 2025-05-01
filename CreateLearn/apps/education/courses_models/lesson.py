@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 from .course import Course
 
@@ -10,9 +11,9 @@ class Lesson(models.Model):
     course = models.ForeignKey(
         Course, on_delete=models.CASCADE, related_name="lessons", verbose_name="Курс"
     )
-    module = models.PositiveSmallIntegerField(default=0, verbose_name="Номер модуля")
     title = models.CharField(max_length=200, verbose_name="Название")
     content = models.TextField(verbose_name="Содержание", blank=True)
+    module = models.PositiveSmallIntegerField(default=0, verbose_name="Номер модуля")
     order = models.PositiveIntegerField(default=0, verbose_name="Номер урока")
     # duration_minutes = models.PositiveSmallIntegerField(
     #     verbose_name="Длительность (мин)",
@@ -22,7 +23,13 @@ class Lesson(models.Model):
     # )
 
     def __str__(self):
-        return f"{self.course.title} - Урок {self.order}: {self.title}"
+        return f"Модуль: {self.module}. Урок {self.order}: {self.title}"
+
+    def get_absolute_url(self):
+        return reverse(
+            "lesson_details",
+            kwargs={"course_slug": self.course.slug, "module": self.module, "order": self.order},
+        )
 
     class Meta:
         ordering = ["order"]
@@ -32,6 +39,9 @@ class Lesson(models.Model):
             models.UniqueConstraint(
                 fields=["course", "module", "order"], name="unique_lesson_order_per_course"
             )
+        ]
+        indexes = [
+            models.Index(fields=["course", "module", "order"]),
         ]
 
 
