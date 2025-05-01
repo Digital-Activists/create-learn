@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreateLearn</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+</head>
+<body id="catalogBody">
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="#"><img src="images/лого.png"alt=""></a>
+            </div>
+            <nav>
+                <a href="#">ГЛАВНАЯ</a>
+                <a href="#" class="active">КАТАЛОГ</a>
+                <a href="#">ИНСТРУМЕНТЫ</a>
+                <a href="#">МОИ КУРСЫ</a>
+            </nav>
+            <div class="profile-icon">
+                <a href="#"><img src="images/профиль.png"class="profile"alt=""></a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="catalog-header">
+            <h1>Каталог онлайн-курсов</h1>
+            <div class="categories">
+                <button class="category">Подготовка к ЕГЭ по математике</button>
+                <button class="category">Подготовка к ОГЭ по русскому языку</button>
+                <button class="category">Высшая математика</button>
+                <button class="category">Физика для студентов</button>
+                <button class="category">Навыки для успешной сдачи экзамена</button>
+                <button class="category">Инструменты и технологии</button>
+                <button class="category active">Все курсы</button>
+            </div>
+            <p class="popular-requests">Самые популярные запросы!</p>
+        </section>
+
+        <section class="search-and-course">
+            <div class="search-container">
+                <p class="search-text">Найди подходящий для себя курс!</p>
+                <input type="search" placeholder="Поиск">
+            </div>
+            <div class="course-grid">
+                <div class="course-card">
+                    <img src="images/p1.png" alt="">
+                    <div class="course-info">
+                        <h3>Вероятность: решаем быстро и точно</h3>
+                        <p>Петр Сергеев, эксперт ЕГЭ по математике, стаж 15 лет</p>
+                        <p>Мест: 30</p>
+                    </div>
+                    <button class="enroll-button">Записаться</button>
+                    <div class="course-footer">
+                        <i class="fa-regular fa-star" style="font-size:20px;color: rgb(0, 0, 0)" aria-hidden="true"></i>
+                        <i class="far fa-clock" style="font-size:20px;color: rgb(0, 0, 0)"></i>
+                        <span>1 неделя</span>
+                    </div>
+                </div>
+                 <div class="course-card">
+                    <img src="images/p2.png" alt="">
+                    <div class="course-info">
+                        <h3>Планиметрия: нестандартные подходы</h3>
+                        <p>Петр Сергеев, эксперт ЕГЭ по математике, стаж 15 лет</p>
+                        <p>Мест: 30</p>
+                    </div>
+                    <button class="enroll-button">Записаться</button>
+                    <div class="course-footer">
+                        <i class="fa-regular fa-star" style="font-size:20px;color: rgb(0, 0, 0)" aria-hidden="true"></i>
+                        <i class="far fa-clock" style="font-size:20px;color: rgb(0, 0, 0)"></i>
+                        <span>2 недели</span>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <img src="images/p3.png" alt="">
+                    <div class="course-info">
+                        <h3>Функции: графики и свойства</h3>
+                        <p>Мария Цветкова, эксперт ОГЭ по математике и русскому языку, стаж 5 лет</p>
+                        <p>Мест: 30</p>
+                    </div>
+                    <button class="enroll-button">Записаться</button>
+                    <div class="course-footer">
+                        <i class="fa-regular fa-star" style="font-size:20px;color: rgb(0, 0, 0)" aria-hidden="true"></i>
+                        <i class="far fa-clock" style="font-size:20px;color: rgb(0, 0, 0)"></i>
+                        <span>2 недели</span>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <img src="images/p4.png" alt="">
+                    <div class="course-info">
+                        <h3>Сочинение: аргументы из классики</h3>
+                        <p>Мария Цветкова, эксперт ОГЭ по математике и русскому языку, стаж 5 лет</p>
+                        <p>Мест: 30</p>
+                    </div>
+                    <button class="enroll-button">Записаться</button>
+                    <div class="course-footer">
+                        <i class="fa-regular fa-star" style="font-size:20px;color: rgb(0, 0, 0)" aria-hidden="true"></i>
+                        <i class="far fa-clock" style="font-size:20px;color: rgb(0, 0, 0)"></i>
+                        <span>2 недели</span>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <img src="images/p5.png" alt="">
+                    <div class="course-info">
+                        <h3>Линейная алгебра (связанная с диф. уравнениями)</h3>
+                        <p>Михаил Бутаков, преподаватель математики в МГУ, стаж 10 лет</p>
+                        <p>Мест: 30</p>
+                    </div>
+                    <button class="enroll-button">Записаться</button>
+                    <div class="course-footer">
+                        <i class="fa-regular fa-star" style="font-size:20px;color: rgb(0, 0, 0)" aria-hidden="true"></i>
+                        <i class="far fa-clock" style="font-size:20px;color: rgb(0, 0, 0)"></i>
+                        <span>3 недели</span>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <img src="images/p6.png" alt="">
+                    <div class="course-info">
+                        <h3>Теория вероятностей и математическая статистика</h3>
+                        <p>Михаил Бутаков, преподаватель в МГУ, стаж 10 лет</p>
+                        <p>Мест: 30</p>
+                    </div>
+                    <button class="enroll-button">Записаться</button>
+                    <div class="course-footer">
+                        <i class="fa-regular fa-star" style="font-size:20px;color: rgb(0, 0, 0)" aria-hidden="true"></i>
+                        <i class="far fa-clock" style="font-size:20px;color: rgb(0, 0, 0)"></i>
+                        <span>2 недели</span>
+                    </div>
+                </div>
+
+                 <div class="course-card">
+                    <img src="images/p7.png" alt="">
+                    <div class="course-info">
+                        <h3>Тайм-менеджмент на экзамене: как все успеть</h3>
+                        <p>Екатерина Иванова, преподаватель истории в УрФУ, стаж 7 лет</p>
+                        <p>Мест: 30</p>
+                    </div>
+                    <button class="enroll-button">Записаться</button>
+                    <div class="course-footer">
+                        <i class="fa-regular fa-star" style="font-size:20px;color: rgb(0, 0, 0)" aria-hidden="true"></i>
+                        <i class="far fa-clock" style="font-size:20px;color: rgb(0, 0, 0)"></i>
+                        <span>3 дня</span>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <img src="images/p8.png" alt="">
+                    <div class="course-info">
+                        <h3>Работа с научными статьями: быстро и эффективно</h3>
+                        <p>Екатерина Иванова, преподаватель истории в УрФУ, стаж 7 лет</p>
+                        <p>Мест: неограничено</p>
+                    </div>
+                    <button class="enroll-button">Записаться</button>
+                    <div class="course-footer">
+                        <i class="fa-regular fa-star" style="font-size:20px;color: rgb(0, 0, 0)" aria-hidden="true"></i>
+                        <i class="far fa-clock" style="font-size:20px;color: rgb(0, 0, 0)"></i>
+                        <span>3 дня</span>
+                    </div>
+                </div>
+                 <div class="course-card">
+                    <img src="images/p9.png" alt="">
+                    <div class="course-info">
+                        <h3>Поиск информации в научных базах данных</h3>
+                        <p>Екатерина Иванова, преподаватель истории в УрФУ, стаж 7 лет</p>
+                        <p>Мест: неограничено</p>
+                    </div>
+                    <button class="enroll-button">Записаться</button>
+                    <div class="course-footer">
+                        <i class="fa-regular fa-star" style="font-size:20px;color: rgb(0, 0, 0)" aria-hidden="true"></i>
+                        <i class="far fa-clock" style="font-size:20px;color: rgb(0, 0, 0)"></i>
+                        <span>1 неделя</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container" style="border-top: 1px solid gray; min-width: 100%">
+            <div class="footer-content">
+                <img src="images/лого.png" width="100" height="100px" style="margin-top: -20px" />
+                <div style="width: 50%">
+                    <p>
+                        CreateLearn - платформа для микрообучения по онлайн-курсам и конструктор для создания своих
+                        собственных.
+                    </p>
+                </div>
+                <p style="margin-left: 100px">+7 999 999 99 99</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
