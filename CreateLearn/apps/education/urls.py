@@ -10,6 +10,7 @@ from .views import (
     index,
     about_us,
     LessonViewSet,
+    course1,
 )
 
 router = DefaultRouter()
@@ -33,7 +34,7 @@ urlpatterns = [
     path("about_us", about_us, name="education_about_us"),
     #
     # TODO:
-    # path("my-courses", view.as_view(), name="my_courses"),
+    path("my-courses", course1, name="my_courses"),
     # path("constructor/<slug:slug>", view.as_view()),
     # path("constructor/<slug:slug>/lesson/<int:pk>", view.as_view()),
     path("api/", include(router.urls)),
