@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CreateLearn</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{% static 'style_1.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -18,16 +19,16 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <a href="#"><img src="images/лого.png"alt=""></a>
+                 <a href="#"><img src="{% static 'img/лого.png' %}" alt=""></a>
             </div>
             <nav>
-                <a href="#">ГЛАВНАЯ</a>
-                <a href="#" class="active">КАТАЛОГ</a>
-                <a href="#">ИНСТРУМЕНТЫ</a>
-                <a href="#">МОИ КУРСЫ</a>
+                <a href="{% url 'home' %}">ГЛАВНАЯ</a>
+                <a href="{% url "education_courses" %}" class="active">КАТАЛОГ</a>
+                <a href="{% url 'education_about_us' %}">О НАС</a>
+                <a href="{% url 'my_courses' %}">МОИ КУРСЫ</a>
             </nav>
             <div class="profile-icon">
-                <a href="#"><img src="images/профиль.png"class="profile"alt=""></a>
+                <a href="#"><img src="{% static 'img/профиль.png' %}" class="profile" alt=""></a>
             </div>
         </div>
     </header>
@@ -54,7 +55,7 @@
             </div>
             <div class="course-grid">
                 <div class="course-card">
-                    <img src="images/p1.png" alt="">
+                    <img src="{% static 'img/p1.png' %}" alt="">
                     <div class="course-info">
                         <h3>Вероятность: решаем быстро и точно</h3>
                         <p>Петр Сергеев, эксперт ЕГЭ по математике, стаж 15 лет</p>
@@ -68,7 +69,7 @@
                     </div>
                 </div>
                  <div class="course-card">
-                    <img src="images/p2.png" alt="">
+                    <img src="{% static 'img/p2.png' %}" alt="">
                     <div class="course-info">
                         <h3>Планиметрия: нестандартные подходы</h3>
                         <p>Петр Сергеев, эксперт ЕГЭ по математике, стаж 15 лет</p>
@@ -83,7 +84,7 @@
                 </div>
 
                 <div class="course-card">
-                    <img src="images/p3.png" alt="">
+                    <img src="{% static 'img/p3.png' %}" alt="">
                     <div class="course-info">
                         <h3>Функции: графики и свойства</h3>
                         <p>Мария Цветкова, эксперт ОГЭ по математике и русскому языку, стаж 5 лет</p>
@@ -98,7 +99,7 @@
                 </div>
 
                 <div class="course-card">
-                    <img src="images/p4.png" alt="">
+                    <img src="{% static 'img/p4.png' %}" alt="">
                     <div class="course-info">
                         <h3>Сочинение: аргументы из классики</h3>
                         <p>Мария Цветкова, эксперт ОГЭ по математике и русскому языку, стаж 5 лет</p>
@@ -113,7 +114,7 @@
                 </div>
 
                 <div class="course-card">
-                    <img src="images/p5.png" alt="">
+                    <img src="{% static 'img/p5.png' %}" alt="">
                     <div class="course-info">
                         <h3>Линейная алгебра (связанная с диф. уравнениями)</h3>
                         <p>Михаил Бутаков, преподаватель математики в МГУ, стаж 10 лет</p>
@@ -128,7 +129,7 @@
                 </div>
 
                 <div class="course-card">
-                    <img src="images/p6.png" alt="">
+                    <img src="{% static 'img/p6.png' %}" alt="">
                     <div class="course-info">
                         <h3>Теория вероятностей и математическая статистика</h3>
                         <p>Михаил Бутаков, преподаватель в МГУ, стаж 10 лет</p>
@@ -143,7 +144,7 @@
                 </div>
 
                  <div class="course-card">
-                    <img src="images/p7.png" alt="">
+                    <img src="{% static 'img/p7.png' %}" alt="">
                     <div class="course-info">
                         <h3>Тайм-менеджмент на экзамене: как все успеть</h3>
                         <p>Екатерина Иванова, преподаватель истории в УрФУ, стаж 7 лет</p>
@@ -158,7 +159,7 @@
                 </div>
 
                 <div class="course-card">
-                    <img src="images/p8.png" alt="">
+                    <img src="{% static 'img/p8.png' %}" alt="">
                     <div class="course-info">
                         <h3>Работа с научными статьями: быстро и эффективно</h3>
                         <p>Екатерина Иванова, преподаватель истории в УрФУ, стаж 7 лет</p>
@@ -172,7 +173,7 @@
                     </div>
                 </div>
                  <div class="course-card">
-                    <img src="images/p9.png" alt="">
+                    <img src="{% static 'img/p9.png' %}" alt="">
                     <div class="course-info">
                         <h3>Поиск информации в научных базах данных</h3>
                         <p>Екатерина Иванова, преподаватель истории в УрФУ, стаж 7 лет</p>
@@ -191,7 +192,7 @@
     <footer>
         <div class="container" style="border-top: 1px solid gray; min-width: 100%">
             <div class="footer-content">
-                <img src="images/лого.png" width="100" height="100px" style="margin-top: -20px" />
+                <img src="{% static 'img/лого.png' %}" width="100" height="100px" style="margin-top: -20px" />
                 <div style="width: 50%">
                     <p>
                         CreateLearn - платформа для микрообучения по онлайн-курсам и конструктор для создания своих

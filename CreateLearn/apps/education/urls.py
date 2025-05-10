@@ -37,5 +37,5 @@ urlpatterns = [
     path("my-courses", course1, name="my_courses"),
     # path("constructor/<slug:slug>", view.as_view()),
     # path("constructor/<slug:slug>/lesson/<int:pk>", view.as_view()),
-    path("api/", include(router.urls)),
+    path("api/", include(router.urls)), 
 ]

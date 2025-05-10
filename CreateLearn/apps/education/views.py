@@ -13,7 +13,7 @@ from .forms import SearchCourseForm
 class CoursesListView(SearchMixin):
     model = Course
     form_class = SearchCourseForm
-    template_name = "test/test_list.html"
+    template_name = "test/test_list.html" 
     context_object_name = "courses"
 
 
