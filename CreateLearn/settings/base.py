@@ -105,7 +105,7 @@ REST_FRAMEWORK = {
     ],
     # Управляет правами доступа к API:
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+        "rest_framework.permissions.AllowAny"  # TODO: Поменять на проде
     ],
     # Определяет способы аутентификации
     "DEFAULT_AUTHENTICATION_CLASSES": [
@@ -145,3 +145,4 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static_dev")]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "users.CustomUser"
+LOGIN_URL = "login"

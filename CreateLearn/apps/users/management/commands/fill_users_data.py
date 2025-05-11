@@ -9,11 +9,11 @@ fake = Faker("ru_RU")
 
 class Command(BaseCommand):
     help = "Fill users app with test data"
-    roles = [r[0] for r in (Role.TEACHER, Role.STUDENT)]
+    roles = [Role.TEACHER, Role.STUDENT]
 
     def add_arguments(self, parser):
         parser.add_argument("--count", type=int, default=20, help="Number of users to create")
-        parser.add_argument("--drop", type=bool, default=False, help="Drop data before fill")
+        parser.add_argument("--drop", action="store_true", help="Drop data before fill")
 
     def handle(self, *args, **options):
         if options["drop"]:
@@ -37,9 +37,9 @@ class Command(BaseCommand):
                 date_of_birth=fake.date_of_birth(),
                 role=role,
             )
-            if role == Role.TEACHER[0]:
+            if role == Role.TEACHER:
                 self.create_random_teacher(user)
-            elif role == Role.STUDENT[0]:
+            elif role == Role.STUDENT:
                 self.create_random_student(user)
 
         self.stdout.write(
@@ -49,7 +49,7 @@ class Command(BaseCommand):
         )
 
     def create_admin(self, email: str, password: str):
-        if len(CustomUser.objects.filter(email=email)) == 0:
+        if not CustomUser.objects.filter(email=email).exists():
             admin = CustomUser.objects.create_superuser(
                 email=email,
                 password=password,
@@ -66,9 +66,11 @@ class Command(BaseCommand):
 
     @staticmethod
     def create_random_teacher(user: CustomUser):
+        experience_values = [choice[0] for choice in Teacher.TeachingExperience.choices]
+
         (teacher, created) = Teacher.objects.get_or_create(
             user=user,
-            teaching_experience=fake.random_element(elements=Teacher.TeachingExperience.choices),
+            teaching_experience=fake.random_element(elements=experience_values),
             about_oneself=fake.paragraph(),
             teaching_subjects=fake.job(),
             qualification=fake.job(),
@@ -77,10 +79,13 @@ class Command(BaseCommand):
 
     @staticmethod
     def create_random_student(user: CustomUser):
+        course_values = [choice[0] for choice in Student.CourseLevel.choices]
+        class_values = [choice[0] for choice in Student.ClassLevel.choices]
+
         (student, created) = Student.objects.get_or_create(
             user=user,
             educational_institution=fake.company(),
-            course=fake.random_element(elements=Student.CourseLevel.choices),
-            class_level=fake.random_element(elements=Student.ClassLevel.choices),
+            course=fake.random_element(elements=course_values),
+            class_level=fake.random_element(elements=class_values),
         )
         return student

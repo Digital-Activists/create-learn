@@ -1,22 +1,35 @@
-from django.http import HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 
-from ..models import CustomUser
-from .forms import SetEmailForm, UserInfoForm, CustomSetPasswordForm
+from ..models import CustomUser, Student, Teacher
+from .forms import (
+    SetEmailForm,
+    UserInfoForm,
+    CustomSetPasswordForm,
+    ProfileFillStudentForm,
+    ProfileFillTeacherFormWithSocNetworks,
+)
 
 
 class SettingsSecurityView(SuccessMessageMixin, LoginRequiredMixin, TemplateView):
     model = CustomUser
-    template_name = "test/test_forms.html"
+    template_name = "education/settings_profile.html"
     success_url = reverse_lazy("users_settings_security")
     login_url = reverse_lazy("login")
     success_message = "Изменения сохранены"
+
+    success_messages = {
+        CustomSetPasswordForm.FORM_NAME: "Пароль успешно изменен",
+        UserInfoForm.FORM_NAME: "Профиль успешно обновлен",
+        SetEmailForm.FORM_NAME: "Email успешно изменен",
+    }
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -47,7 +60,8 @@ class SettingsSecurityView(SuccessMessageMixin, LoginRequiredMixin, TemplateView
 
         if form.is_valid():
             form.save()
-            messages.success(request, self.success_message)
+            # TODO: Отправка сообщение в разные формы
+            messages.success(request, self.success_messages.get(form_name, self.success_message))
             return redirect(self.success_url)
 
         context = self.get_context_data()
@@ -58,5 +72,42 @@ class SettingsSecurityView(SuccessMessageMixin, LoginRequiredMixin, TemplateView
         return self.request.user
 
 
-class SettingsProfileView(LoginRequiredMixin, UpdateView):
-    pass
+class SettingsProfileRedirectView(LoginRequiredMixin, RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        if self.request.user.teacher:
+            return reverse_lazy("settings_profile_teacher")
+        if self.request.user.student:
+            return reverse_lazy("settings_profile_student")
+        return reverse_lazy("home")
+
+
+class SettingsProfileStudentView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = Student
+    form_class = ProfileFillStudentForm
+    template_name = "education/inf_stud.html"
+    success_url = reverse_lazy("settings_profile_student")
+    success_message = "Профиль успешно обновлен"
+
+    def dispatch(self, request, *args, **kwargs):
+        if not hasattr(request.user, "student"):
+            return redirect("home")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        return self.request.user.student
+
+
+class SettingsProfileTeacherView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = Teacher
+    form_class = ProfileFillTeacherFormWithSocNetworks
+    template_name = "education/inf_teach.html"
+    success_url = reverse_lazy("settings_profile_student")
+    success_message = "Профиль успешно обновлен"
+
+    def dispatch(self, request, *args, **kwargs):
+        if not hasattr(request.user, "teacher"):
+            return redirect("home")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        return self.request.user.teacher

@@ -66,7 +66,7 @@ class Student(models.Model):
         CLASS_7_9 = "7-9", "7-9 класс"
         CLASS_10_11 = "10-11", "10-11 класс"
 
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="student")
     educational_institution = models.CharField(
         max_length=100, verbose_name="Учебное заведение", blank=True
     )
@@ -87,7 +87,7 @@ class Teacher(models.Model):
         YEARS_8_10 = "8-10", "8-10 лет"
         OVER_10 = "10+", "Более 10 лет"
 
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="teacher")
     teaching_experience = models.CharField(
         max_length=5,
         choices=TeachingExperience.choices,

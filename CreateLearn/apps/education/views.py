@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.views.generic.detail import DetailView
 from rest_framework import viewsets
 
@@ -13,8 +13,13 @@ from .forms import SearchCourseForm
 class CoursesListView(SearchMixin):
     model = Course
     form_class = SearchCourseForm
-    template_name = "test/test_list.html" 
+    template_name = "education/catalog.html"
     context_object_name = "courses"
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # Prefetch related teacher data to avoid N+1 queries
+        return queryset.select_related('creator__teacher')
 
 
 class CourseDetailView(DetailView):

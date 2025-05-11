@@ -13,8 +13,8 @@ class CustomSetPasswordForm(SetPasswordForm):
         super().__init__(*args, **kwargs)
 
         # Настройка виджетов для полей
-        # self.fields["new_password1"].widget.attrs.update({"class": "form-control"})
-        # self.fields["new_password2"].widget.attrs.update({"class": "form-control"})
+        self.fields["new_password1"].widget.attrs.update({"placeholder": "Новый пароль"})
+        self.fields["new_password2"].widget.attrs.update({"placeholder": "Повторите пароль"})
 
         # Или так
         # for field in self.fields.values():
@@ -28,8 +28,12 @@ class SetEmailForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ["email"]
-        widgets = {"email": forms.EmailInput(attrs={})}
+        widgets = {"email": forms.EmailInput(attrs={"placeholder": "Новый email"})}
         labels = {"email": "Изменить e-mail"}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["email"].initial = ""
 
 
 class UserInfoForm(forms.ModelForm):
@@ -40,9 +44,15 @@ class UserInfoForm(forms.ModelForm):
         model = CustomUser
         fields = ["avatar", "first_name", "last_name"]
         widgets = {
-            "avatar": forms.FileInput(attrs={}),
-            "first_name": forms.TextInput(attrs={}),
-            "last_name": forms.TextInput(attrs={}),
+            "avatar": forms.FileInput(
+                attrs={
+                    "style": "display: none;",
+                    "id": "avatar",
+                    "onchange": "previewAvatar(event)",
+                }
+            ),
+            "first_name": forms.TextInput(attrs={"placeholder": "Имя"}),
+            "last_name": forms.TextInput(attrs={"placeholder": "Фамилия"}),
         }
         labels = {"first_name": "Имя", "last_name": "Фамилия", "avatar": "Аватар"}
 
@@ -96,3 +106,8 @@ class ProfileFillTeacherForm(forms.ModelForm):
             "teaching_experience": "Опыт преподавания",
             "qualification": "Квалификация/Образование",
         }
+
+
+# TODO: Прикрутка соц сетей
+class ProfileFillTeacherFormWithSocNetworks(ProfileFillTeacherForm):
+    pass

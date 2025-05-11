@@ -17,10 +17,10 @@ class SearchCourseForm(forms.ModelForm):
                 query &= Q(**{lookup: value})
 
         return self.Meta.model.objects.filter(query)
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        
+
         for field_name in self.Meta.search_fields.keys():
             self.fields[field_name].required = False
 
@@ -28,7 +28,7 @@ class SearchCourseForm(forms.ModelForm):
         model = Course
         fields = ("title",)
         widgets = {
-            "title": forms.TextInput(attrs={}),
+            "title": forms.TextInput(attrs={"type": "search", "placeholder": "Поиск"}),
         }
         search_fields = {
             "title": "title__icontains",

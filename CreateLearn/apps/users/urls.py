@@ -1,3 +1,7 @@
+from CreateLearn.apps.users.settings.views import (
+    SettingsProfileStudentView,
+    SettingsProfileTeacherView,
+)
 from .views import (
     LoginUserView,
     RegisterChoiceView,
@@ -6,7 +10,7 @@ from .views import (
     ProfileFillStudentView,
     ProfileFillTeacherView,
     logout_user,
-    SettingsProfileView,
+    SettingsProfileRedirectView,
     SettingsSecurityView,
 )
 from django.urls import include, path
@@ -34,7 +38,17 @@ urlpatterns = [
     ),
     path(
         "settings/profile",
-        SettingsProfileView.as_view(),
+        SettingsProfileRedirectView.as_view(),
         name="users_settings_profile",
+    ),
+    path(
+        "settings/profile/student",
+        SettingsProfileStudentView.as_view(),
+        name="settings_profile_student",
+    ),
+    path(
+        "settings/profile/teacher",
+        SettingsProfileTeacherView.as_view(),
+        name="settings_profile_teacher",
     ),
 ]

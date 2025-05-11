@@ -7,4 +7,7 @@ from .auth.views import (
     ProfileFillStudentView,
     ProfileFillTeacherView,
 )
-from .settings.views import SettingsSecurityView, SettingsProfileView
+from .settings.views import (
+    SettingsSecurityView,
+    SettingsProfileRedirectView,
+)
