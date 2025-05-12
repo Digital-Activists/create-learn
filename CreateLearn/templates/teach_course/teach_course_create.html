@@ -1,0 +1,82 @@
+{% extends 'teach_course/base_teach_course.html' %}
+{% load static %}
+{% block title %}Конструктор{% endblock %}
+
+{% block content %}
+    <div class="tabs">
+      <a href="{% url 'teach_course_create' %}"><div class="tab active">Конструктор</div></a>
+      <a href="#"><div class="tab">Страница курса</div></a>
+      <a href="{% url 'teach_setting_course' %}"><div class="tab">Настройки курса</div></a>
+    </div>
+
+    <div style="display: block ruby;">
+        <div class="module">
+            <div class="module-section">
+                <div class="module-title">
+                    <h5>ЕГЭ:Праметры</h5>
+                    <button>
+                        <img src="{% static 'img/module1.png' %}" width="25" height="25" style="transform: rotate(90deg);">
+                        Первый модуль
+                    </button>
+                </div>
+                <button class="add-button purple">+ Занятие</button>
+
+                <div class="view-selection">
+                    <div class="view-selection-box">
+                        <div class="header-box">
+                            <h4>Выберите тип занятия</h4>
+                            <button class="close-view-selection">+</button>
+                        </div>
+                        <div class="selection-box">
+                            <div class="selection-box-button">
+                                <a href="{% url 'teach_create_tasks' %}">
+                                    <button id="next-button">
+                                        <img src="{% static 'img/create_course.png' %}">
+                                    </button>
+                                </a>
+                                <h5>Обычное</h5>
+                                <p>*Может содержать тексты, видео, аудио, картинки и файлы</p>
+                            </div>
+                            <div class="selection-box-button">
+                                <button><img src="{% static 'img/create_card.png' %}"></button>
+                                <h5>Флэш-карточки</h5>
+                                <p>*Может содержать задания  в формате термин-определение и в тестовом виде</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script src="{% static 'teach_course_create.js' %}"></script>
+
+                <button class="add-button orange">+ Модуль</button>
+            </div>
+
+            <a>
+                <button class="button-over-module">
+                    <p style="margin: 0px;">Завершение курса</p>
+                </button>
+            </a>
+        </div>
+
+        <div class="content">
+            <h1>Создай свое первое задание!</h1>
+            <h3>Кликни на кнопку "+ Задание"!</h3>
+        </div>
+
+        <!-- <div class="view-selection">
+            <h4>Выберите тип занятия</h4>
+            <button>+</button>
+            <div>
+                <div>
+                    <button><img src="{% static 'img/create_course.png' %}"></button>
+                    <p>*Может содержать тексты, видео, аудио, картинки и файлы</p>
+                </div>
+                <div>
+                    <button><img src="{% static 'img/create_card.png' %}"></button>
+                    <p>*Может содержать задания  в формате термин-определение и в тестовом виде</p>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <script src="{% static 'teach_course_create.js' %}"></script>
+    
+{% endblock %}

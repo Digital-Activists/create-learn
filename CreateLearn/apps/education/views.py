@@ -89,3 +89,18 @@ def about_us(request):
 def course1(request):
     template_name = "teach_course/teach_course1.html"
     return render(request, template_name)
+
+
+def teach_course_create(request):
+    template_name = "teach_course/teach_course_create.html"
+    return render(request, template_name)
+
+
+def teach_create_task(request):
+    template_name = "teach_course/teach_create_tasks.html"
+    return render(request, template_name)
+
+
+def teach_setting_course(request):
+    template_name = "teach_course/setting_course.html"
+    return render(request, template_name)
