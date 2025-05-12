@@ -9,10 +9,55 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 
 from CreateLearn.apps.users.models import Student, Teacher
-from ...models import Course, Lesson
+from ...models import Course, Lesson, CourseCategory, Module, LessonPage
 
 User = get_user_model()
 fake = Faker("ru_RU")
+
+
+CATEGORIES = [
+    "Подготовка к ЕГЭ по математике",
+    "Подготовка к ОГЭ по русскому языку",
+    "Высшая математика",
+    "Высшая математика",
+    "Навыки для успешной сдачи экзамена",
+    "Инструменты и технологии",
+    "Математика",
+    "Физика",
+    "Химия",
+    "Биология",
+    "Информатика",
+    "Инженерная графика",
+    "Музыка",
+    "Литература",
+    "История",
+    "География",
+    "Английский язык",
+    "Физкультура",
+    "Технология",
+    "Экономика",
+    "Психология",
+    "Логика",
+]
+
+DURATIONS = [
+    "1 час",
+    "2 часа",
+    "3 часа",
+    "1 день",
+    "2 дня",
+    "6 дней",
+    "1 неделю",
+    "2 недели",
+    "1 месяц",
+    "2 месяца",
+    "3 месяца",
+    "пол года",
+    "1 год",
+    "2 года",
+    "5 лет",
+    "10 лет",
+]
 
 
 class Command(BaseCommand):
@@ -20,60 +65,102 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("--courses", type=int, default=10, help="Number of courses to create")
-        parser.add_argument("--drop", action="store_true", help="Drop data before fill")
 
     def handle(self, *args, **options):
-        teachers = Teacher.objects.all()
-        students = Student.objects.all()
-        lessons_count = 0
+        self.teachers = Teacher.objects.all()
+        self.students = Student.objects.all()
+        self.created_modules = 0
+        self.created_lessons = 0
+        self.created_pages = 0
 
-        if teachers.count() == 0 or students.count() == 0:
+        if self.teachers.count() == 0 or self.students.count() == 0:
             self.stdout.write(
                 self.style.ERROR("No teachers or students found. Please create some first.")
             )
             return
 
-        if options["drop"]:
-            Course.objects.all().delete()
-            Lesson.objects.all().delete()
-            self.stdout.write(self.style.SUCCESS("All courses and lessons deleted."))
+        for cat in CATEGORIES:
+            CourseCategory.objects.get_or_create(name=cat)
 
         # Создаем курсы
         for i in tqdm(range(options["courses"]), desc="Creating courses"):
-            teacher = fake.random_element(teachers)
-            course_title = f"Курс по {fake.word().capitalize()}"
-            course = Course(
-                title=course_title,
-                description=fake.text(),
-                creator=teacher.user,
-                is_published=fake.boolean(85),
-            )
-
-            # Generate and set the avatar
-            avatar_image = generate_course_avatar(course_title)
-            course.avatar.save(avatar_image.name, avatar_image, save=False)
-            course.save()
-
-            # Добавляем случайных студентов на курс
-            course.students.set(
-                map(
-                    lambda student: student.user,
-                    fake.random_elements(students, length=fake.random_int(1, 10)),
-                ),
-            )
-
-            # Создаем уроки
-            for j in range(fake.random_int(2, 10)):
-                Lesson.objects.get_or_create(
-                    course=course, title=fake.sentence(), order=j, content=fake.text()
-                )
-                lessons_count += 1
+            self.create_course()
 
         self.stdout.write(
             self.style.SUCCESS(
-                f'Created {options["courses"]} courses with {lessons_count} lessons.'
+                f'Created {options["courses"]} courses with {self.created_modules} modules with {self.created_lessons} lessons with {self.created_pages} pages.'
             )
         )
+
+    def create_course(self):
+        teacher = fake.random_element(self.teachers)
+        course_title = f"Курс по {fake.word().capitalize()}"
+        course = Course(
+            title=course_title,
+            description=fake.text(),
+            creator=teacher.user,
+            is_published=fake.boolean(85),
+            number_places=fake.random_int(1, 100),
+            category=fake.random_element(CourseCategory.objects.all()),
+            duration=fake.random_element(DURATIONS),
+        )
+
+        # Generate and set the avatar
+        avatar_image = generate_course_avatar(course_title)
+        course.avatar.save(avatar_image.name, avatar_image, save=False)
+        course.save()
+
+        self.create_modules(course)
+
+        # Добавляем случайных студентов на курс
+        course.students.set(
+            map(
+                lambda student: student.user,
+                fake.random_elements(self.students, length=fake.random_int(1, 10)),
+            ),
+        )
+
+    def create_modules(self, course):
+        modules_count = fake.random_int(1, 3)
+        self.created_modules += modules_count
+
+        # Создаем модули
+        for j in range(modules_count):
+            (module, created) = Module.objects.get_or_create(
+                course=course, title=fake.sentence(), order=j, is_published=fake.boolean(90)
+            )
+            if created:
+                self.create_lessons(module)
+                self.created_modules += 1
+
+    def create_lessons(self, module):
+        lessons_count = fake.random_int(1, 4)
+
+        # Создаем уроки
+        for j in range(lessons_count):
+            (lesson, created) = Lesson.objects.get_or_create(
+                module=module,
+                title=fake.sentence(),
+                order=j,
+                content=fake.text(),
+                is_published=fake.boolean(90),
+            )
+            if created:
+                self.create_pages(lesson)
+                self.created_lessons += 1
+
+    def create_pages(self, lesson):
+        pages_count = fake.random_int(1, 3)
+
+        for j in range(pages_count):
+            (page, created) = LessonPage.objects.get_or_create(
+                lesson=lesson,
+                title=fake.sentence(),
+                content=fake.text(),
+                order=j,
+            )
+            if created:
+                self.created_pages += pages_count
 
 
 def generate_course_avatar(course_title):

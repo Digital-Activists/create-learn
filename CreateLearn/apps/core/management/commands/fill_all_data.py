@@ -10,7 +10,12 @@ class Command(BaseCommand):
         # Последовательность заполнения важна, если есть зависимости между моделями
         apps_to_fill = [
             ("users", {"count": 20, "drop": False}),
-            ("education", {"courses": 15, "drop": False}),
+            (
+                "education",
+                {
+                    "courses": 10,
+                },
+            ),
         ]
 
         for app_name, params in apps_to_fill:

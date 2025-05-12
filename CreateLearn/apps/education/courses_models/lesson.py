@@ -1,20 +1,21 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from django.utils import timezone
 
-from .course import Course
+from .modules import Module
 
 User = get_user_model()
 
 
 class Lesson(models.Model):
-    course = models.ForeignKey(
-        Course, on_delete=models.CASCADE, related_name="lessons", verbose_name="Курс"
+    module = models.ForeignKey(
+        Module, on_delete=models.CASCADE, related_name="lessons", verbose_name="Модуль"
     )
     title = models.CharField(max_length=200, verbose_name="Название")
     content = models.TextField(verbose_name="Содержание", blank=True)
-    module = models.PositiveSmallIntegerField(default=0, verbose_name="Номер модуля")
-    order = models.PositiveIntegerField(default=0, verbose_name="Номер урока")
+    order = models.PositiveSmallIntegerField(default=0, verbose_name="Номер урока")
+    is_published = models.BooleanField(default=False)
     # duration_minutes = models.PositiveSmallIntegerField(
     #     verbose_name="Длительность (мин)",
     #     validators=[MaxValueValidator(600)],
@@ -23,12 +24,12 @@ class Lesson(models.Model):
     # )
 
     def __str__(self):
-        return f"Модуль: {self.module}. Урок {self.order}: {self.title}"
+        return f"Урок {self.order}: {self.title}"
 
     def get_absolute_url(self):
         return reverse(
             "lesson_details",
-            kwargs={"course_slug": self.course.slug, "module": self.module, "order": self.order},
+            kwargs={"course_slug": self.module.slug, "module": self.module, "order": self.order},
         )
 
     class Meta:
@@ -36,26 +37,11 @@ class Lesson(models.Model):
         verbose_name = "Урок"
         verbose_name_plural = "Уроки"
         constraints = [
-            models.UniqueConstraint(
-                fields=["course", "module", "order"], name="unique_lesson_order_per_course"
-            )
+            models.UniqueConstraint(fields=["module", "order"], name="unique_order_per_module")
         ]
         indexes = [
-            models.Index(fields=["course", "module", "order"]),
+            models.Index(fields=["module", "order"]),
         ]
-
-
-class LessonAttachment(models.Model):
-    lesson = models.ForeignKey(
-        Lesson, on_delete=models.CASCADE, related_name="attachments", verbose_name="Урок"
-    )
-    file = models.FileField(upload_to="lesson_attachments/", verbose_name="Файл")
-    # title = models.CharField(max_length=100, verbose_name="Название файла")
-    # description = models.TextField(blank=True, verbose_name="Описание")
-
-    class Meta:
-        verbose_name = "Приложение к уроку"
-        verbose_name_plural = "Приложения к урокам"
 
 
 class UserProgressLesson(models.Model):
@@ -63,3 +49,13 @@ class UserProgressLesson(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     is_completed = models.BooleanField(default=False)
     completed_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["lesson", "user"], name="unique_lesson_per_user")
+        ]
+
+    def save(self, *args, **kwargs):
+        if self.is_completed and not self.completed_at:
+            self.completed_at = timezone.now()
+        super().save(*args, **kwargs)
