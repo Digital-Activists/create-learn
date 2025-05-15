@@ -1,15 +1,20 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
+from .courses.views import (
+    CourseViewSet,
+    LessonPageViewSet,
+    ModuleViewSet,
+    LessonViewSet,
+    PageAttachmentViewSet,
+)
 from .views import (
     CourseDetailView,
-    CourseViewSet,
     CoursesListView,
     LessonDetailView,
     LessonsListView,
     index,
     about_us,
-    LessonViewSet,
     course1,
     teach_course_create,
     teach_create_task,
@@ -18,7 +23,10 @@ from .views import (
 
 router = DefaultRouter()
 router.register(r"lessons", LessonViewSet)
+router.register(r"lesson-pages", LessonPageViewSet)
+router.register(r"page-attachments", PageAttachmentViewSet)
 router.register(r"courses", CourseViewSet)
+router.register(r"modules", ModuleViewSet)
 
 urlpatterns = [
     path("", index, name="home"),
@@ -37,12 +45,8 @@ urlpatterns = [
     path("about_us", about_us, name="education_about_us"),
     path("my-courses", course1, name="my_courses"),
     path("my-courses/create", teach_course_create, name="teach_course_create"),
-    path("my-courses/create/tasks",
-         teach_create_task,
-         name="teach_create_tasks"),
-    path("my-courses/create/setting",
-         teach_setting_course,
-         name="teach_setting_course"),
+    path("my-courses/create/tasks", teach_create_task, name="teach_create_tasks"),
+    path("my-courses/create/setting", teach_setting_course, name="teach_setting_course"),
     # path("constructor/<slug:slug>", view.as_view()),
     # path("constructor/<slug:slug>/lesson/<int:pk>", view.as_view()),
     path("api/", include(router.urls)),

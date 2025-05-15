@@ -1,1 +1,1 @@
-from .courses_models import *
+from .courses import *

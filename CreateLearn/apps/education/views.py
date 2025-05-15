@@ -2,9 +2,7 @@ from django.http import Http404
 from django.shortcuts import render
 from django.views.generic import ListView, TemplateView
 from django.views.generic.detail import DetailView
-from rest_framework import viewsets
 
-from .serializers import LessonSerializer, CourseSerializer
 from .models import Course, Lesson
 from .utils import SearchMixin
 from .forms import SearchCourseForm
@@ -15,11 +13,11 @@ class CoursesListView(SearchMixin):
     form_class = SearchCourseForm
     template_name = "education/catalog.html"
     context_object_name = "courses"
-    
+
     def get_queryset(self):
         queryset = super().get_queryset()
         # Prefetch related teacher data to avoid N+1 queries
-        return queryset.select_related('creator__teacher')
+        return queryset.select_related("creator__teacher")
 
 
 class CourseDetailView(DetailView):
@@ -64,16 +62,6 @@ class LessonDetailView(DetailView):
             raise Http404("Урок не найден")
 
         return lesson
-
-
-class CourseViewSet(viewsets.ModelViewSet):
-    queryset = Course.objects.all()
-    serializer_class = CourseSerializer
-
-
-class LessonViewSet(viewsets.ModelViewSet):
-    queryset = Lesson.objects.all()
-    serializer_class = LessonSerializer
 
 
 def index(request):
