@@ -1,7 +1,9 @@
+from django.shortcuts import redirect
 from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class SearchMixin(ListView):
+class SearchView(ListView):
     form = None
 
     # Указать в наследующемся классе следующие поля
@@ -20,3 +22,11 @@ class SearchMixin(ListView):
         context = super().get_context_data(**kwargs)
         context["form"] = self.form or self.form_class()
         return context
+
+
+class TeacherLoginRequired(LoginRequiredMixin):
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        if request.user.is_authenticated and not hasattr(request.user, "teacher"):
+            return redirect("home")
+        return response

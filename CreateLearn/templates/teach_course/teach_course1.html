@@ -8,60 +8,90 @@
         <h1 style="color: #1c154e;">Конструктор Курсов</h1>
         <hr class="title-line" / style="width: 600px;">
     </div>
-    <div class="courses1-div">
-        <h3>Высшая математика</h3>
-        <div style="display: flex; gap: 3%;">
-            <div class="course-grid">
-                <div class="course1-card">
-                    <div class='course1-card-1'>
-                        <img src="{% static 'img/p1.png' %}">
-                        <div>
-                            <h4>Вероятность: решаем быстро и точно</h4>
-                            <p style="font-weight: 300;">Петр Сергеев, эксперт ЕГЭ по математике, стаж 15 лет</p>
-                            <p style="font-weight: 300;">Мест: 30</p>
+    
+    {% for category, courses in categories.items %}
+        <div class="courses1-div">
+            <h3>{{ category }}</h3>
+            <div style="display: flex; gap: 3%;">
+                {% for course in courses %}
+                    <div class="course-grid">
+                        <div class="course1-card">
+                            <div class="course1-card-1">
+                                {% if course.avatar %}
+                                    <img src="{{ course.avatar.url }}">
+                                {% else %}
+                                    <img src="{% static 'img/p1.png' %}">
+                                {% endif %}
+                                <div>
+                                    <h4>{{ course.title }}</h4>
+                                    <p style="font-weight: 300;">{{ course.creator }}, {{ course.creator.teacher.qualification }}, стаж: {{ course.creator.teacher.get_teaching_experience_display }}</p>
+                                    <p style="font-weight: 300;">Мест: {{ course.number_places }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="course-actions">
+                                <a href="#">
+                                    <button class="button-edit">Редактировать</button>
+                                </a>
+                                <span><img src="{% static 'img/star.png' %}" width="15px" height="15px"> 0</span>
+                                <span><img src="{% static 'img/time.png' %}" width="17px" height="17px"> {{ course.duration }}</span>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="course-actions">
-                        <a href="#">
-                            <button class="button-edit">Редактировать</button>
-                        </a>
-                        <span><img src="{% static 'img/star.png' %}" width="15px" height="15px"> 0</span>
-                        <span><img src="{% static 'img/time.png' %}" width="17px" height="17px"> 1 неделя</span>
-                    </div>
-                </div>
-            </div>
+                {% endfor %}
 
-            <div class="course-grid">
-                <div class="course1-card">
-                    <div class='course1-card-1'>
-                        <img src="{% static 'img/p2.png' %}">
-                        <div>
-                            <h4>Планиметрия: нестандартные подходы</h4>
-                            <p style="font-weight: 300;">Петр Сергеев, эксперт ЕГЭ по математике, стаж 15 лет</p>
-                            <p style="font-weight: 300;">Мест: 30</p>
+                {% comment %} <div class="course-grid">
+                    <div class="course1-card">
+                        <div class='course1-card-1'>
+                            <img src="{% static 'img/p1.png' %}">
+                            <div>
+                                <h4>Вероятность: решаем быстро и точно</h4>
+                                <p style="font-weight: 300;">Петр Сергеев, эксперт ЕГЭ по математике, стаж 15 лет</p>
+                                <p style="font-weight: 300;">Мест: 30</p>
+                            </div>
+                        </div>
+                        
+                        <div class="course-actions">
+                            <a href="#">
+                                <button class="button-edit">Редактировать</button>
+                            </a>
+                            <span><img src="{% static 'img/star.png' %}" width="15px" height="15px"> 0</span>
+                            <span><img src="{% static 'img/time.png' %}" width="17px" height="17px"> 1 неделя</span>
                         </div>
                     </div>
-                    
-                    <div class="course-actions">
-                        <a href="#">
-                            <button class="button-edit">Редактировать</button>
-                        </a>
-                        <span><img src="{% static 'img/star.png' %}" width="15px" height="15px"> 0</span>
-                        <span><img src="{% static 'img/time.png' %}" width="17px" height="17px"> 2 недели</span>
-                    </div>
                 </div>
-            </div>
 
-            <a href="{% url 'teach_course_create' %}" class="button-create-course">
-                <button>
-                    <img src="{% static 'img/pluse.png' %}">
-                    <p>Создать микрокурс</p>
-                </button>
-            </a>
-            
+                <div class="course-grid">
+                    <div class="course1-card">
+                        <div class='course1-card-1'>
+                            <img src="{% static 'img/p2.png' %}">
+                            <div>
+                                <h4>Планиметрия: нестандартные подходы</h4>
+                                <p style="font-weight: 300;">Петр Сергеев, эксперт ЕГЭ по математике, стаж 15 лет</p>
+                                <p style="font-weight: 300;">Мест: 30</p>
+                            </div>
+                        </div>
+                        
+                        <div class="course-actions">
+                            <a href="#">
+                                <button class="button-edit">Редактировать</button>
+                            </a>
+                            <span><img src="{% static 'img/star.png' %}" width="15px" height="15px"> 0</span>
+                            <span><img src="{% static 'img/time.png' %}" width="17px" height="17px"> 2 недели</span>
+                        </div>
+                    </div>
+                </div> {% endcomment %}
+
+                <a href="{% url 'teach_course_create' %}" class="button-create-course">
+                    <button>
+                        <img src="{% static 'img/pluse.png' %}">
+                        <p>Создать микрокурс</p>
+                    </button>
+                </a>
+                
+            </div>
         </div>
-    </div>
+    {% endfor %}
 
     <div class="courses1-div">
         <h3>Новая категория</h3>

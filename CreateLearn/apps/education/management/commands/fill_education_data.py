@@ -65,6 +65,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("--courses", type=int, default=10, help="Number of courses to create")
+        parser.add_argument("--admin", type=int, default=5, help="Number of courses for admin")
 
     def handle(self, *args, **options):
         self.teachers = Teacher.objects.all()
@@ -79,6 +80,7 @@ class Command(BaseCommand):
             )
             return
 
+        # Создаем категории
         for cat in CATEGORIES:
             CourseCategory.objects.get_or_create(name=cat)
 
@@ -86,14 +88,22 @@ class Command(BaseCommand):
         for i in tqdm(range(options["courses"]), desc="Creating courses"):
             self.create_course()
 
+        admin = User.objects.filter(email="admin@admin.com")
+
+        if admin.exists():
+            for i in tqdm(range(options["admin"]), desc="Creating courses for admin"):
+                self.create_course(admin.first().teacher)
+
         self.stdout.write(
             self.style.SUCCESS(
                 f'Created {options["courses"]} courses with {self.created_modules} modules with {self.created_lessons} lessons with {self.created_pages} pages.'
             )
         )
 
-    def create_course(self):
-        teacher = fake.random_element(self.teachers)
+    def create_course(self, teacher=None):
+        if not teacher:
+            teacher = fake.random_element(self.teachers)
+
         course_title = f"Курс по {fake.word().capitalize()}"
         course = Course(
             title=course_title,

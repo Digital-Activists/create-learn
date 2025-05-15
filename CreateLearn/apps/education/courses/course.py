@@ -15,6 +15,7 @@ class CourseCategory(models.Model):
         return self.name
 
 
+# TODO: Stars для курсов
 class Course(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название курса")
     slug = models.SlugField(max_length=255, db_index=True, unique=True)

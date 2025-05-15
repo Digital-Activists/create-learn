@@ -89,7 +89,7 @@ class SettingsProfileStudentView(SuccessMessageMixin, LoginRequiredMixin, Update
     success_message = "Профиль успешно обновлен"
 
     def dispatch(self, request, *args, **kwargs):
-        if not hasattr(request.user, "student"):
+        if request.user.is_authenticated and not hasattr(request.user, "student"):
             return redirect("home")
         return super().dispatch(request, *args, **kwargs)
 
@@ -105,7 +105,7 @@ class SettingsProfileTeacherView(SuccessMessageMixin, LoginRequiredMixin, Update
     success_message = "Профиль успешно обновлен"
 
     def dispatch(self, request, *args, **kwargs):
-        if not hasattr(request.user, "teacher"):
+        if request.user.is_authenticated and not hasattr(request.user, "teacher"):
             return redirect("home")
         return super().dispatch(request, *args, **kwargs)
 

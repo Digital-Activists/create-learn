@@ -1,58 +1,97 @@
 {% extends 'teach_course/base_teach_course.html' %}
 {% load static %}
-{% block title %}Конструктор{% endblock %}
+{% block title %}
+    Конструктор
+{% endblock %}
 
 {% block content %}
-<div class="tabs">
-      <a href="{% url 'teach_course_create' %}"><div class="tab ">Конструктор</div></a>
-      <a href="#"><div class="tab">Страница курса</div></a>
-      <a href="{% url 'teach_setting_course' %}"><div class="tab active">Настройки курса</div></a>
-</div>
-<div style="text-align: center;">
-    <div class="setting-content">
-        <div class="setting-box">
-            <div class="setting-box-1">
-                <div class="content-1">
-                    <p>Иконка*</p>
-                    <img src="{% static 'img/image.png' %}">
-                </div>
-                <div class="content-1">
-                    <p>Название курса*</p>
-                    <input type="text" class="text-footer">
-                </div>
-            </div>
-            <div class="setting-box-2">
-                <h5>Данные преподавателя*</h5>
-                <p>(ФИО, квалификация, стаж работы)</p>
-                <input type="text" style="width: -moz-available; height: 100px;" class="text-footer">
-            </div>
-            <div class="setting-box-1">
-                <div class="content-1" style="margin-top: 6.4%;">
-                    <h5>Кол-во мест на курсе</h5>
-                    <input type="text" class="text-footer">
-                </div>
-                <div class="content-1">
-                    <h5>Время прохождения курса*</h5>
-                    <p>(Например: “ 7 часов”;  “2 дня”; “ 1 неделя”)</p>
-                    <input type="text" class="text-footer">
-                </div>
-            </div>
-        </div>
-
-        <div class="setting-box-next">
-            <h5>Категория курса*</h5>
-            <p>Выбрать существующую категорию</p>
-            <input type="text" class="text-footer">
-            <p>Создать новую категорию</p>
-            <input type="text" class="text-footer">
-            <h5 style="margin-top: 2%;">Статус курса</h5>
-            <div class="box-3">
-                <p>Не опубликован</p>
-                <button class="button-start" style="font-size: 20px;margin-top: -10px;">Опубликовать</button>
-                <button class="button-delete">Удалить курс</button>
-            </div>
-        </div>
+    <div class="tabs">
+        <a href="{% url 'teach_course_create' %}"><div class="tab">Конструктор</div></a>
+        <a href="#"><div class="tab">Страница курса</div></a>
+        <a href="#"><div class="tab active">Настройки курса</div></a>
     </div>
-    <button class="button-start" style="font-size: 20px;margin-top: -10px;">Сохранить</button>
-</div>
+    <form style="text-align: center;" method="post">
+        {% csrf_token %}
+        <div class="setting-content">
+            <div class="setting-box">
+                <div class="setting-box-1">
+                    <div class="content-1">
+                        <p>Иконка*</p>
+                        {% comment %}Скрипт привязан к id="avatar-input-icon"{% endcomment %}
+                        <img id="avatar-input-icon" src="{% static 'img/image.png' %}" />
+                        {{ form.avatar }}
+                        {{ form.avatar.errors }}
+                    </div>
+                    <div class="content-1">
+                        <p>Название курса*</p>
+                        {{ form.title }}
+                        {{ form.title.errors }}
+                    </div>
+                </div>
+                <div class="setting-box-2">
+                    <h5>Данные преподавателя*</h5>
+                    <p>(ФИО, квалификация, стаж работы)</p>
+                    {% comment %}TODO: Что то с этим сделать{% endcomment %}
+                    <input type="text" style="width: -moz-available; height: 100px;" class="text-footer" />
+                </div>
+                <div class="setting-box-1">
+                    <div class="content-1" style="margin-top: 6.4%;">
+                        <h5>Кол-во мест на курсе</h5>
+                        {{ form.number_places }}
+                        {{ form.number_places.errors }}
+                    </div>
+                    <div class="content-1">
+                        <h5>Время прохождения курса*</h5>
+                        <p>(Например: “ 7 часов”; “2 дня”; “ 1 неделя”)</p>
+                        {{ form.duration }}
+                        {{ form.duration.errors }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-box-next">
+                <h5>Категория курса*</h5>
+                <p>Выбрать существующую категорию</p>
+                {{ form.category }}
+                {{ form.category.errors }}
+                <p>Создать новую категорию</p>
+                {% comment %}TODO: Создание категорий{% endcomment %}
+                <input type="text" class="text-footer" />
+                <h5 style="margin-top: 2%;">Статус курса</h5>
+                <div class="box-3">
+                    {% comment %}TODO: Кнопки удаление, изменение курса пусть работают через REST{% endcomment %}
+                    {% if course.is_published %}
+                        <p>Опубликован</p>
+                        <button class="button-start" style="font-size: 20px;margin-top: -10px;">Убрать</button>
+                    {% else %}
+                        <p>Не опубликован</p>
+                        <button class="button-start" style="font-size: 20px;margin-top: -10px;">Опубликовать</button>
+                    {% endif %}
+                    <button class="button-delete">Удалить курс</button>
+                </div>
+            </div>
+        </div>
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {% for error in form.non_field_errors %}
+                    <p class="error-message">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <button type="submit" class="button-start" style="font-size: 20px;margin-top: -10px;">Сохранить</button>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </form>
+
+    <script>
+        {% comment %} Скрипт для добавления аватарки  {% endcomment %}
+        document.getElementById('avatar-input-icon').addEventListener('click', function () {
+            document.getElementById('avatar-input').click()
+        })
+    </script>
 {% endblock %}

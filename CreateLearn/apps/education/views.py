@@ -1,14 +1,17 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
+from django.contrib.messages.views import SuccessMessageMixin
 
 from .models import Course, Lesson
-from .utils import SearchMixin
-from .forms import SearchCourseForm
+from .utils import SearchView, TeacherLoginRequired
+from .forms import CourseForm, SearchCourseForm
 
 
-class CoursesListView(SearchMixin):
+class CoursesListView(SearchView):
     model = Course
     form_class = SearchCourseForm
     template_name = "education/catalog.html"
@@ -16,7 +19,6 @@ class CoursesListView(SearchMixin):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        # Prefetch related teacher data to avoid N+1 queries
         return queryset.select_related("creator__teacher")
 
 
@@ -64,6 +66,45 @@ class LessonDetailView(DetailView):
         return lesson
 
 
+class ConstructorCoursesView(TeacherLoginRequired, ListView):
+    model = Course
+    template_name = "teach_course/teach_course1.html"
+    context_object_name = "courses"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = {}
+
+        for course in context["courses"]:
+            if course.category not in categories:
+                categories[course.category] = []
+            categories[course.category].append(course)
+
+        context.update({"categories": categories})
+        return context
+
+    def get_queryset(self):
+        queryset = Course.objects.filter(creator=self.request.user)
+        return queryset.select_related("creator__teacher", "category")
+
+
+class CreateCourseView(TeacherLoginRequired, SuccessMessageMixin, CreateView):
+    model = Course
+    template_name = "teach_course/setting_course.html"
+    form_class = CourseForm
+    success_url = reverse_lazy("teach_create_tasks")
+    success_message = "Курс успешно создан"
+
+    def form_valid(self, form):
+        form.instance.creator = self.request.user
+        return super().form_valid(form)
+
+
+class TeacherSettingsCourse(UpdateView):
+    model = Course
+    template_name = "teach_course/setting_course.html"
+
+
 def index(request):
     template_name = "includes/index.html"
     return render(request, template_name)
@@ -74,21 +115,6 @@ def about_us(request):
     return render(request, template_name)
 
 
-def course1(request):
-    template_name = "teach_course/teach_course1.html"
-    return render(request, template_name)
-
-
-def teach_course_create(request):
-    template_name = "teach_course/teach_course_create.html"
-    return render(request, template_name)
-
-
 def teach_create_task(request):
     template_name = "teach_course/teach_create_tasks.html"
-    return render(request, template_name)
-
-
-def teach_setting_course(request):
-    template_name = "teach_course/setting_course.html"
     return render(request, template_name)

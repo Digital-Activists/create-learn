@@ -1,5 +1,6 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
+from django.views.generic.base import RedirectView
 
 from .courses.views import (
     CourseViewSet,
@@ -13,12 +14,12 @@ from .views import (
     CoursesListView,
     LessonDetailView,
     LessonsListView,
+    ConstructorCoursesView,
     index,
     about_us,
-    course1,
-    teach_course_create,
+    CreateCourseView,
     teach_create_task,
-    teach_setting_course,
+    TeacherSettingsCourse,
 )
 
 router = DefaultRouter()
@@ -43,11 +44,14 @@ urlpatterns = [
         name="lesson_details",
     ),
     path("about_us", about_us, name="education_about_us"),
-    path("my-courses", course1, name="my_courses"),
-    path("my-courses/create", teach_course_create, name="teach_course_create"),
-    path("my-courses/create/tasks", teach_create_task, name="teach_create_tasks"),
-    path("my-courses/create/setting", teach_setting_course, name="teach_setting_course"),
-    # path("constructor/<slug:slug>", view.as_view()),
-    # path("constructor/<slug:slug>/lesson/<int:pk>", view.as_view()),
+    path("constructor", RedirectView.as_view(pattern_name="my_courses")),
+    path("constructor/my-courses", ConstructorCoursesView.as_view(), name="my_courses"),
+    path("constructor/create", CreateCourseView.as_view(), name="teach_course_create"),
+    path("constructor/create/tasks", teach_create_task, name="teach_create_tasks"),
+    path(
+        "constructor/<slug:slug>/setting",
+        TeacherSettingsCourse.as_view(),
+        name="teach_setting_course",
+    ),
     path("api/", include(router.urls)),
 ]

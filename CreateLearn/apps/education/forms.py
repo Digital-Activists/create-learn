@@ -33,3 +33,16 @@ class SearchCourseForm(forms.ModelForm):
         search_fields = {
             "title": "title__icontains",
         }
+
+
+class CourseForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = ["avatar", "title", "number_places", "duration", "category"]
+        widgets = {
+            "title": forms.TextInput(attrs={"class": "text-footer"}),
+            "number_palaces": forms.NumberInput(attrs={"class": "text-footer"}),
+            "avatar": forms.FileInput(attrs={"style": "display: none;", "id": "avatar-input"}),
+            "duration": forms.TextInput(attrs={"class": "text-footer"}),
+            "category": forms.Select(attrs={"class": "text-footer"}),
+        }
