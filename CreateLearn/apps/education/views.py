@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 
-from .models import Course, Lesson
+from .models import Course, Lesson, LessonPage
 from .utils import SearchView, TeacherLoginRequired
 from .forms import CourseForm, SearchCourseForm
 
@@ -100,9 +100,38 @@ class CreateCourseView(TeacherLoginRequired, SuccessMessageMixin, CreateView):
         return super().form_valid(form)
 
 
-class TeacherSettingsCourse(UpdateView):
+class TeacherSettingsCourse(TeacherLoginRequired, SuccessMessageMixin, UpdateView):
     model = Course
     template_name = "teach_course/setting_course.html"
+    form_class = CourseForm
+    success_message = "Курс обновлен"
+    context_object_name = "course"
+
+    def get_success_url(self):
+        slug = self.kwargs.get("slug")  # или self.object.slug
+        return reverse_lazy("teach_setting_course", kwargs={"slug": slug})
+
+
+class TeacherCreateTasks(TeacherLoginRequired, ListView):
+    model = LessonPage
+    template_name = "teach_course/teach_create_tasks.html"
+    context_object_name = "pages"
+
+    def get_queryset(self):
+        course_slug = self.kwargs.get("slug")
+        module_order = self.kwargs.get("module")
+        lesson_order = self.kwargs.get("lesson")
+
+        queryset = LessonPage.objects.filter(
+            lesson__module__course__slug=course_slug,
+            lesson__module__order=module_order,
+            lesson__order=lesson_order,
+        ).prefetch_related("attachments")
+
+        if not queryset.exists():
+            raise Http404("Урок не найден")
+
+        return queryset.all()
 
 
 def index(request):
@@ -112,9 +141,4 @@ def index(request):
 
 def about_us(request):
     template_name = "includes/about_us.html"
-    return render(request, template_name)
-
-
-def teach_create_task(request):
-    template_name = "teach_course/teach_create_tasks.html"
     return render(request, template_name)

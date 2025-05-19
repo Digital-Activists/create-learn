@@ -8,6 +8,8 @@ from .courses.views import (
     ModuleViewSet,
     LessonViewSet,
     PageAttachmentViewSet,
+    FlashCardsDeckViewSet,
+    FlashCardViewSet,
 )
 from .views import (
     CourseDetailView,
@@ -18,12 +20,14 @@ from .views import (
     index,
     about_us,
     CreateCourseView,
-    teach_create_task,
+    TeacherCreateTasks,
     TeacherSettingsCourse,
 )
 
 router = DefaultRouter()
 router.register(r"lessons", LessonViewSet)
+router.register(r"flash-cards", FlashCardViewSet)
+router.register(r"flash-cards-decks", FlashCardsDeckViewSet)
 router.register(r"lesson-pages", LessonPageViewSet)
 router.register(r"page-attachments", PageAttachmentViewSet)
 router.register(r"courses", CourseViewSet)
@@ -47,7 +51,11 @@ urlpatterns = [
     path("constructor", RedirectView.as_view(pattern_name="my_courses")),
     path("constructor/my-courses", ConstructorCoursesView.as_view(), name="my_courses"),
     path("constructor/create", CreateCourseView.as_view(), name="teach_course_create"),
-    path("constructor/create/tasks", teach_create_task, name="teach_create_tasks"),
+    path(
+        "constructor/<slug:slug>/module/<int:module>/lesson/<int:lesson>",
+        TeacherCreateTasks.as_view(),
+        name="teach_create_tasks",
+    ),
     path(
         "constructor/<slug:slug>/setting",
         TeacherSettingsCourse.as_view(),

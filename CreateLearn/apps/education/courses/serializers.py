@@ -3,6 +3,7 @@ from .course import Course
 from .lesson import Lesson
 from .modules import Module
 from .lesson_page import LessonPage, PageAttachment
+from .flash_cards import FlashCard, FlashCardsDeck
 
 
 class LessonSerializer(serializers.ModelSerializer):
@@ -43,3 +44,15 @@ class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Module
         fields = ["course", "title", "order", "is_published"]
+
+
+class FlashCardsDeckSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FlashCardsDeck
+        fields = ["lesson", "title", "description"]
+
+
+class FlashCardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FlashCard
+        fields = ["deck", "front", "back", "order"]

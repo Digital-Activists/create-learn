@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+import mimetypes
 
 from .lesson import Lesson
 
@@ -38,6 +39,14 @@ class PageAttachment(models.Model):
     file = models.FileField(upload_to="lesson_attachments/", verbose_name="Файл")
     # title = models.CharField(max_length=100, verbose_name="Название файла")
     # description = models.TextField(blank=True, verbose_name="Описание")
+
+    def __str__(self):
+        return self.file.name
+
+    def get_filetype(self):
+        file_type = mimetypes.guess_type(self.file.name)[0]
+        (file_type, extension) = file_type.split("/")
+        return file_type
 
 
 class UserProgressPage(models.Model):

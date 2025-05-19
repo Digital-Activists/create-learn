@@ -1,4 +1,8 @@
-# CreateLearn
+<div style="display: flex; justify-content: center; align-items: center;">
+    <img src="./CreateLearn/static_dev/img/logo.png" width="200">
+    <h1>CreateLearn</h1>
+</div>
+
 Платформа для людей, желающих учиться, и тех, кто готов делиться знаниями
 
 ## Запуск
@@ -48,9 +52,7 @@ make reset-and-run
 
 Опционально установить из `requirements_dev.txt`
 
-### Для заполнения БД
-
-Можно использовать
+### Для заполнения БД тестовыми данными
 
 ```sh
 # Для заполнения всех приложений
@@ -61,4 +63,6 @@ python manage.py fill_users_data
 python manage.py fill_education_data
 ```
 
-#### Проектный практикум - весна 2025
+--
+
+Проектный практикум - весна 2025

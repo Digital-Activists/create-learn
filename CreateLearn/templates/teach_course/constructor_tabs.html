@@ -1,0 +1,13 @@
+{% with slug=request.resolver_match.kwargs.slug %}
+    <div class="tabs">
+        <a href="{% if slug %} {% url 'teach_create_tasks' slug=slug module=0 lesson=0 %} {% else %}#{% endif %}">
+            <div class="tab {% if active_tab == 'constructor' %}active{% endif %}">Конструктор</div>
+        </a>
+        <a href="{% if slug %} # {% else %}#{% endif %}">
+            <div class="tab {% if active_tab == 'course_page' %}active{% endif %}">Страница курса</div>
+        </a>
+        <a href="{% if slug %} {% url 'teach_setting_course' slug=slug %} {% else %}#{% endif %}">
+            <div class="tab {% if active_tab == 'settings' %}active{% endif %}">Настройки курса</div>
+        </a>
+    </div>
+{% endwith %}

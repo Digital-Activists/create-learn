@@ -5,12 +5,8 @@
 {% endblock %}
 
 {% block content %}
-    <div class="tabs">
-        <a href="{% url 'teach_course_create' %}"><div class="tab">Конструктор</div></a>
-        <a href="#"><div class="tab">Страница курса</div></a>
-        <a href="#"><div class="tab active">Настройки курса</div></a>
-    </div>
-    <form style="text-align: center;" method="post">
+    {% include 'teach_course/constructor_tabs.html' with active_tab='settings' %}
+    <form style="text-align: center;" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="setting-content">
             <div class="setting-box">
@@ -18,7 +14,11 @@
                     <div class="content-1">
                         <p>Иконка*</p>
                         {% comment %}Скрипт привязан к id="avatar-input-icon"{% endcomment %}
-                        <img id="avatar-input-icon" src="{% static 'img/image.png' %}" />
+                        <img id="avatar-input-icon" width="100" src="{% if course.avatar %}
+                            {{ course.avatar.url }}
+                        {% else %}
+                            {% static 'img/image.png' %}
+                        {% endif %}" />
                         {{ form.avatar }}
                         {{ form.avatar.errors }}
                     </div>
@@ -78,7 +78,6 @@
                 {% endfor %}
             </div>
         {% endif %}
-        <button type="submit" class="button-start" style="font-size: 20px;margin-top: -10px;">Сохранить</button>
         {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
@@ -86,6 +85,7 @@
                 {% endfor %}
             </ul>
         {% endif %}
+        <button type="submit" class="button-start" style="font-size: 20px;margin-top: -10px;">Сохранить</button>
     </form>
 
     <script>

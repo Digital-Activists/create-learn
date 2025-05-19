@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.core.files.uploadedfile import SimpleUploadedFile
 from faker import Faker
 from django.contrib.auth import get_user_model
 from tqdm import tqdm
@@ -9,7 +10,16 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 
 from CreateLearn.apps.users.models import Student, Teacher
-from ...models import Course, Lesson, CourseCategory, Module, LessonPage
+from ...models import (
+    Course,
+    Lesson,
+    CourseCategory,
+    Module,
+    LessonPage,
+    FlashCardsDeck,
+    FlashCard,
+    PageAttachment,
+)
 
 User = get_user_model()
 fake = Faker("ru_RU")
@@ -59,6 +69,13 @@ DURATIONS = [
     "10 лет",
 ]
 
+file_types = [
+    ("image/jpeg", "jpg"),
+    ("application/pdf", "pdf"),
+    ("video/mp4", "mp4"),
+    ("audio/mp3", "mp3"),
+]
+
 
 class Command(BaseCommand):
     help = "Fill education app with test data with users dependencies"
@@ -73,6 +90,8 @@ class Command(BaseCommand):
         self.created_modules = 0
         self.created_lessons = 0
         self.created_pages = 0
+        self.created_flash_cards = 0
+        self.created_attachments = 0
 
         if self.teachers.count() == 0 or self.students.count() == 0:
             self.stdout.write(
@@ -96,7 +115,7 @@ class Command(BaseCommand):
 
         self.stdout.write(
             self.style.SUCCESS(
-                f'Created {options["courses"]} courses with {self.created_modules} modules with {self.created_lessons} lessons with {self.created_pages} pages.'
+                f'Created: {options["courses"]} courses, {self.created_modules} modules, {self.created_lessons} lessons, {self.created_pages} pages, {self.created_attachments} attachments, {self.created_flash_cards} flash_cards.'
             )
         )
 
@@ -157,6 +176,7 @@ class Command(BaseCommand):
             )
             if created:
                 self.create_pages(lesson)
+                self.create_flash_cards(lesson)
                 self.created_lessons += 1
 
     def create_pages(self, lesson):
@@ -171,6 +191,33 @@ class Command(BaseCommand):
             )
             if created:
                 self.created_pages += pages_count
+                if fake.boolean(chance_of_getting_true=50):
+                    self.create_page_attachment(page)
+
+    def create_page_attachment(self, page):
+        (file_type, extension) = fake.random_element(file_types)
+
+        PageAttachment.objects.create(
+            page=page,
+            file=SimpleUploadedFile(
+                f"forpage_{page.pk}.{extension}",
+                bytes(fake.text(), encoding="utf-8"),
+                content_type=file_type,
+            ),
+        )
+        self.created_attachments += 1
+
+    def create_flash_cards(self, lesson):
+        deck = FlashCardsDeck.objects.create(
+            lesson=lesson, title=fake.sentence(), description=fake.text()
+        )
+        flash_cards_count = fake.random_int(1, 3)
+
+        for j in range(flash_cards_count):
+            flash_card = FlashCard.objects.create(
+                deck=deck, front=fake.sentence(), back=fake.sentence(), order=j
+            )
+            self.created_flash_cards += flash_cards_count
 
 
 def generate_course_avatar(course_title):

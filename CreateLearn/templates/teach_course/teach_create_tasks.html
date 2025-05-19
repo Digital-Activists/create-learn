@@ -5,15 +5,62 @@
 {% endblock %}
 
 {% block content %}
-    <div class="tabs">
-        <a href="#"><div class="tab active">Конструктор</div></a>
-        <a href="#"><div class="tab">Страница курса</div></a>
-        <a href="#"><div class="tab">Настройки курса</div></a>
-    </div>
+    {% include 'teach_course/constructor_tabs.html' with active_tab='constructor' %}
+    {% for page in pages %}
+        <div class="conteiner-tasks">
+            <div>
+                <div class="tasks-head">
+                    <button style="margin-top: -3%; rotate: 45deg" class="tasks-head-button">+</button>
+                    <input type="text" placeholder="Заголовок страницы" class="text-header" value="{{ page.title }}" />
+                    <div>
+                        {% for attachment in page.attachments.all %}
+                            {% with file_type=attachment.get_filetype %}
+                                {% comment %}TODO: Здесь надо показывать загруженные attachments, а не пустые input{% endcomment %}
+
+                                {% if file_type == 'image' %}
+                                    <div class="video-box">
+                                        <img src="{% static 'img/file.png' %}" width="80px" height="80px" />
+                                        <h4 style="margin-top: 3%">Нажмите для загрузки изображения или перетащите файл сюда</h4>
+                                        <p>Файл обрабатывается до 20 Мб .jpg .png .webp</p>
+                                    </div>
+                                {% elif file_type == 'video' %}
+                                    <div class="video-box">
+                                        <img src="{% static 'img/video.png' %}" width="80px" height="80px" />
+                                        <h4 style="margin-top: 3%">Нажмите для загрузки видео или перетащите файл сюда</h4>
+                                        <p>Файл обрабатывается до 5 Гб</p>
+                                    </div>
+                                {% elif file_type == 'audio' %}
+                                    <div class="video-box">
+                                        <img src="{% static 'img/file.png' %}" width="80px" height="80px" />
+                                        <h4 style="margin-top: 3%">Нажмите для загрузки аудио или перетащите файл сюда</h4>
+                                        <p>Файл обрабатывается до 50 Мб .mp3</p>
+                                    </div>
+                                {% else %}
+                                    <div class="video-box">
+                                        <img src="{% static 'img/file.png' %}" width="80px" height="80px" />
+                                        <h4 style="margin-top: 3%">Прикрепите файлы для скачивания или перетащите файл сюда</h4>
+                                        <p>Файл обрабатывается до 3 Гб</p>
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                        <input type="text" placeholder="Текст" class="text-footer" value="{{ page.content }}" />
+                    </div>
+                    <button class="dropdownBtn tasks-head-button">...</button>
+                    <div class="dropdown-content">
+                        <button class="dropdown-content-button">+ Добавить содержимое</button>
+                        <button class="button-delete">Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% comment %}
     <div class="conteiner-tasks">
         <div>
             <div class="tasks-head">
-                <button style="margin-top: -3%; rotate: 45deg;" class="tasks-head-button">+</button>
+                <button style="margin-top: -3%; rotate: 45deg" class="tasks-head-button">+</button>
                 <input type="text" placeholder="Заголовок страницы" class="text-header" />
 
                 <button class="dropdownBtn tasks-head-button">...</button>
@@ -26,7 +73,7 @@
             <div>
                 <div class="video-box">
                     <img src="{% static 'img/video.png' %}" width="80px" height="80px" />
-                    <h4 style="margin-top: 3%;">Нажмите для загрузки видео или перетащите файл сюда</h4>
+                    <h4 style="margin-top: 3%">Нажмите для загрузки видео или перетащите файл сюда</h4>
                     <p>Файл обрабатывается до 5 Гб</p>
                 </div>
                 <input type="text" placeholder="Текст" class="text-footer" />
@@ -37,7 +84,7 @@
     <div class="conteiner-tasks">
         <div>
             <div class="tasks-head">
-                <button style="margin-top: -3%; rotate: 45deg;" class="tasks-head-button">+</button>
+                <button style="margin-top: -3%; rotate: 45deg" class="tasks-head-button">+</button>
                 <input type="text" placeholder="Заголовок страницы" class="text-header" />
 
                 <button class="dropdownBtn tasks-head-button">...</button>
@@ -50,14 +97,15 @@
             <div>
                 <div class="video-box">
                     <img src="{% static 'img/file.png' %}" width="80px" height="80px" />
-                    <h4 style="margin-top: 3%;">Прикрепите файлы для скачивания или перетащите файл сюда</h4>
+                    <h4 style="margin-top: 3%">Прикрепите файлы для скачивания или перетащите файл сюда</h4>
                     <p>Файл обрабатывается до 3 Гб</p>
                 </div>
                 <input type="text" placeholder="Текст" class="text-footer" />
             </div>
         </div>
     </div>
+    {% endcomment %}
 
-    <a href="#" style="margin-left: 40%;"><button class="button-create-tasks">+ Добавить страницу</button></a>
+    <a href="#" style="margin-left: 40%"><button class="button-create-tasks">+ Добавить страницу</button></a>
     <script src="{% static 'teach_create_tasks.js' %}"></script>
 {% endblock %}

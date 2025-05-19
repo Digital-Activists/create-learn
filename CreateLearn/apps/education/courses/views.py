@@ -4,12 +4,15 @@ from .course import Course
 from .modules import Module
 from .lesson import Lesson
 from .lesson_page import LessonPage, PageAttachment
+from .flash_cards import FlashCardsDeck, FlashCard
 from .serializers import (
     LessonSerializer,
     CourseSerializer,
     ModuleSerializer,
     LessonPageSerializer,
     PageAttachmentSerializer,
+    FlashCardsDeckSerializer,
+    FlashCardSerializer,
 )
 
 
@@ -36,3 +39,13 @@ class LessonPageViewSet(viewsets.ModelViewSet):
 class PageAttachmentViewSet(viewsets.ModelViewSet):
     queryset = PageAttachment.objects.all()
     serializer_class = PageAttachmentSerializer
+
+
+class FlashCardsDeckViewSet(viewsets.ModelViewSet):
+    queryset = FlashCardsDeck.objects.all()
+    serializer_class = FlashCardsDeckSerializer
+
+
+class FlashCardViewSet(viewsets.ModelViewSet):
+    queryset = FlashCard.objects.all()
+    serializer_class = FlashCardSerializer

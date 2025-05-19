@@ -30,7 +30,7 @@
                             </div>
                             
                             <div class="course-actions">
-                                <a href="#">
+                                <a href="{% url "teach_create_tasks" slug=course.slug module=0 lesson=0  %}">
                                     <button class="button-edit">Редактировать</button>
                                 </a>
                                 <span><img src="{% static 'img/star.png' %}" width="15px" height="15px"> 0</span>

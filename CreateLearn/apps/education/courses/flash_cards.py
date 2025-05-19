@@ -3,7 +3,7 @@ from django.db import models
 from .lesson import Lesson
 
 
-class FlashCardDeck(models.Model):
+class FlashCardsDeck(models.Model):
     lesson = models.ForeignKey(
         Lesson, on_delete=models.CASCADE, related_name="flashcard_decks", verbose_name="Урок"
     )
@@ -17,7 +17,7 @@ class FlashCardDeck(models.Model):
 
 class FlashCard(models.Model):
     deck = models.ForeignKey(
-        FlashCardDeck, on_delete=models.CASCADE, related_name="cards", verbose_name="Набор"
+        FlashCardsDeck, on_delete=models.CASCADE, related_name="cards", verbose_name="Набор"
     )
     front = models.TextField(verbose_name="Лицевая сторона")
     back = models.TextField(verbose_name="Обратная сторона")
