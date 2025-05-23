@@ -39,6 +39,7 @@ class Course(models.Model):
     class Meta:
         verbose_name = "Курс"
         verbose_name_plural = "Курсы"
+        ordering = ["title"]
         constraints = [
             models.UniqueConstraint(fields=["creator", "title"], name="unique_course_per_creator")
         ]

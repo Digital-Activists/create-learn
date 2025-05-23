@@ -12,6 +12,7 @@ from .courses.views import (
     FlashCardViewSet,
 )
 from .views import (
+    AddStudentsAPIView,
     CourseDetailView,
     CoursesListView,
     LessonDetailView,
@@ -22,6 +23,7 @@ from .views import (
     CreateCourseView,
     TeacherCreateTasks,
     TeacherSettingsCourse,
+    UsersPerCourseView,
 )
 
 router = DefaultRouter()
@@ -35,6 +37,10 @@ router.register(r"modules", ModuleViewSet)
 
 urlpatterns = [
     path("", index, name="home"),
+    path("api/", include(router.urls)),
+    path("api/add-delete-students/", AddStudentsAPIView.as_view(), name="api_add_delete_students"),
+    path("about_us", about_us, name="education_about_us"),
+    # Courses
     path("courses", CoursesListView.as_view(), name="education_courses"),
     path("courses/<slug:slug>", CourseDetailView.as_view(), name="course_details"),
     path(
@@ -47,7 +53,7 @@ urlpatterns = [
         LessonDetailView.as_view(),
         name="lesson_details",
     ),
-    path("about_us", about_us, name="education_about_us"),
+    # Constructor
     path("constructor", RedirectView.as_view(pattern_name="my_courses")),
     path("constructor/my-courses", ConstructorCoursesView.as_view(), name="my_courses"),
     path("constructor/create", CreateCourseView.as_view(), name="teach_course_create"),
@@ -61,5 +67,5 @@ urlpatterns = [
         TeacherSettingsCourse.as_view(),
         name="teach_setting_course",
     ),
-    path("api/", include(router.urls)),
+    path("constructor/students", UsersPerCourseView.as_view(), name="users_per_course"),
 ]

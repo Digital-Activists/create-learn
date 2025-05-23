@@ -1,14 +1,23 @@
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, FormView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
+from rest_framework.views import APIView
+from rest_framework.generics import CreateAPIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import AddStudentsSerializer, RemoveUsersSerializer
 
 from .models import Course, Lesson, LessonPage
 from .utils import SearchView, TeacherLoginRequired
-from .forms import CourseForm, SearchCourseForm
+from .forms import CourseForm, CoursePeekForm, SearchCourseForm, AddUsersToCourseForm
+
+User = get_user_model()
 
 
 class CoursesListView(SearchView):
@@ -132,6 +141,43 @@ class TeacherCreateTasks(TeacherLoginRequired, ListView):
             raise Http404("Урок не найден")
 
         return queryset.all()
+
+
+class UsersPerCourseView(TeacherLoginRequired, SuccessMessageMixin, ListView):
+    model = User
+    template_name = "test/test_list.html"
+    context_object_name = "users"
+    course_form = CoursePeekForm
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        course_pk = self.request.GET.get("course")
+
+        if course_pk:
+            queryset = queryset.filter(pk=course_pk)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = self.course_form(self.request.GET or None, user=self.request.user)
+        return context
+
+
+class AddStudentsAPIView(APIView):
+    def post(self, request, format=None):
+        serializer = AddStudentsSerializer(data=request.data)
+        if serializer.is_valid():
+            result = serializer.save()
+            return Response(result, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        serializer = RemoveUsersSerializer(data=request.data)
+        if serializer.is_valid():
+            result = serializer.save()
+            return Response(result, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 def index(request):

@@ -1,7 +1,10 @@
 from django import forms
 from django.db.models import Q
+from django.contrib.auth import get_user_model
 
 from .models import Course
+
+User = get_user_model()
 
 
 class SearchCourseForm(forms.ModelForm):
@@ -46,3 +49,47 @@ class CourseForm(forms.ModelForm):
             "duration": forms.TextInput(attrs={"class": "text-footer"}),
             "category": forms.Select(attrs={"class": "text-footer"}),
         }
+
+
+class CoursePeekForm(forms.Form):
+    course = forms.ModelChoiceField(
+        queryset=Course.objects.none(),
+        label="Выберите курс",
+        widget=forms.Select(attrs={}),
+        empty_label="-- Все курсы --",
+        required=False,
+    )
+
+    def __init__(self, *args, user=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields["course"].queryset = Course.objects.filter(creator=user)
+
+
+class AddUsersToCourseForm(forms.Form):
+    """TODO: Класс не используется и не поддерживается"""
+
+    course = forms.ModelChoiceField(queryset=Course.objects.none(), widget=forms.HiddenInput())
+    email_1 = forms.EmailField(required=True, label="1")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Можно динамически добавить больше полей
+        for i in range(2, 6):
+            self.fields[f"email_{i}"] = forms.EmailField(required=False, label=f"{i}")
+
+    def clean(self):
+        cleaned_data = super().clean()
+        emails = [cleaned_data.get(f"email_{i}") for i in range(1, 6)]
+        unique_emails = list(
+            email for email in set(emails) if email
+        )  # Удаляем дубликаты и пустые строки
+
+        if not unique_emails:
+            raise forms.ValidationError("Должен быть указан хотя бы один email")
+
+        if len(unique_emails) != len(emails):
+            self.add_warning("Обнаружены повторяющиеся email, они будут обработаны один раз")
+
+        cleaned_data["emails"] = unique_emails
+        return cleaned_data

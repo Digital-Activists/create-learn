@@ -6,17 +6,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="{% static 'style_course_teach.css' %}" />
         <link rel="stylesheet" href="{% static 'style.css' %}" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+        <link rel="stylesheet"
+              href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
         <title>
-            CreateLearn |{% block title %}
-
-            {% endblock %}
+            CreateLearn |
+            {% block title %}{% endblock %}
         </title>
     </head>
     <body>
         {% include 'includes/header.html' %}
         <main>
-            <div class="container" style="max-width: 100%;
+            <div class="container"
+                 style="max-width: 100%;
                         padding-left: 0px;
                         padding-right: 0px;
                         overflow: hidden">
@@ -24,10 +25,10 @@
                     <aside class="course1-sidebar">
                         <ul class="course1-menu">
                             <li>
-                                <a href="#" class="course1-menu-a">Курсы</a>
+                                <a href="{% url 'my_courses' %}" class="course1-menu-a">Курсы</a>
                             </li>
                             <li>
-                                <a href="#" class="course1-menu-a">Ученики и Аналитика</a>
+                                <a href="{% url 'users_per_course' %}" class="course1-menu-a">Ученики и Аналитика</a>
                             </li>
                             <li>
                                 <a href="#" class="course1-menu-a">Чат</a>
@@ -38,9 +39,7 @@
                         </ul>
                     </aside>
                     <main class="course1-content">
-                        {% block content %}
-
-                        {% endblock %}
+                        {% block content %}{% endblock %}
                     </main>
                 </div>
             </div>
