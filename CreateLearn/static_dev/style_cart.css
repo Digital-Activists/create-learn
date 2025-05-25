@@ -1,0 +1,189 @@
+/*СТРАНИЦА КУРСА*/
+.course-details {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    position: relative;
+    width: 100%; /* На всю ширину */
+    min-height: 100vh; /* Минимальная высота фона — 100% от высоты экрана */
+    padding-left: 150px;
+    padding-top: 10px;
+}
+.head-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.course_group h1{
+    margin-left: 109px;
+    margin-top: 68px;
+    color: #1C154E;
+    font-family: Montserrat;
+    font-size: 40px;
+    margin-bottom: 10px;
+    font-weight: 800;
+}
+
+.back-homepage {
+    text-decoration: none; /* Убираем подчеркивание для всей ссылки */
+    color: black; /* Черный цвет текста и стрелки */
+    font-size: 1rem; /* Размер текста */
+    transition: color 0.3s ease; /* Анимация изменения цвета */
+}
+
+/* Длинная стрелка */
+.back-homepage i {
+    margin-right: 0.5rem; /* Отступ между стрелкой и текстом */
+    font-size: 1.5rem; /* Увеличенный размер стрелки */
+}
+
+/* Подчеркивание только под текстом "В корзину" */
+.back-homepage span {
+    text-decoration: underline; /* Подчеркивание текста */
+    font-size: 24px; /* Размер текста */
+    font-family: Montserrat Alternates;
+}
+
+/* При наведении */
+.back-homepage:hover {
+    color: #000000; /* Голубой цвет текста и стрелки при наведении */
+}
+
+.back-homepage:hover span {
+    text-decoration: underline; /* Сохраняем подчеркивание при наведении */
+}
+
+/* Course Content Styles */
+.course-main-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.course-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрирует кнопку */
+    margin-left: 80px;
+    margin-right: 80px;
+
+}
+
+.course-description {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    gap: 80px;
+}
+
+.course-description .course-image {
+    width: 150px;
+    height: auto;
+    margin-right: 15px;
+    border-radius: 5px;
+}
+
+.course-description p {
+    font-family: Montserrat Alternates;
+    color: #000000;
+    font-size: 26px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.enroll-button_1 {
+    font-family: Montserrat;
+    font-size: 20px;
+    background-color: #F28B57;
+    border: none;
+    color: #fff;
+    border-radius: 20px;
+    width: 313px;
+    height: 57px;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.author-info {
+    background-image: url('images/фон автор.png');
+    flex-shrink: 0;
+    width: 30%;
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.author-info p {
+    font-size: 24px;
+    font-family: Montserrat Alternates;
+    line-height: 1.6;
+}
+
+.avatar-upload_1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    width: 117px;
+    height: 101px;
+    overflow: hidden;
+}
+
+/* Course Outline Styles */
+.course-outline {
+    margin-top: 50px;
+    padding-right: 150px;
+}
+
+.course-outline h2 {
+    font-size: 24px;
+    font-family: Montserrat;
+    color: #1C154E;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.section-title {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.section-title::before,
+.section-title::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background-color: #1C154E;
+}
+
+.course-outline ul {
+    list-style: none;
+    padding: 0;
+    font-family: Montserrat Alternates;
+    font-size: 26px;
+}
+
+.course-outline ul li {
+    margin-bottom: 15px;
+    margin-left: 200px;
+
+}
+
+.course-outline ul li ul {
+    margin-left: 20px;
+}
+
+.course-outline ul li ul li {
+    list-style-type: disc;
+    margin-bottom: 30px;
+    font-family: Montserrat Alternates;
+    font-size: 26px;
+}
