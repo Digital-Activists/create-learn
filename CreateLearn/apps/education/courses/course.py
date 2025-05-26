@@ -31,7 +31,7 @@ class Course(models.Model):
     avatar = models.ImageField(
         upload_to="course_avatars/", verbose_name="Аватар", blank=True, null=True
     )
-    duration = models.TextField(max_length=20, blank=True, verbose_name="Продолжительность")
+    duration = models.TextField(max_length=30, blank=True, verbose_name="Продолжительность")
     number_places = models.PositiveSmallIntegerField(
         null=True, blank=True, verbose_name="Количество мест"
     )

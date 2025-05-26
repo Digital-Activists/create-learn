@@ -13,6 +13,8 @@ from .courses.views import (
 )
 from .views import (
     AddStudentsAPIView,
+    CourseEnrollView,
+    CourseDetailExample,
     CourseDetailView,
     CoursesListView,
     LessonDetailView,
@@ -41,9 +43,12 @@ urlpatterns = [
     path("api/", include(router.urls)),
     path("api/add-delete-students/", AddStudentsAPIView.as_view(), name="api_add_delete_students"),
     path("about_us", about_us, name="education_about_us"),
+    # Examples
+    path("examples/course-card", CourseDetailExample.as_view(), name="course_details"),
     # Courses
     path("courses", CoursesListView.as_view(), name="education_courses"),
     path("courses/<slug:slug>", CourseDetailView.as_view(), name="course_details"),
+    path("courses/<slug:slug>/enroll", CourseEnrollView.as_view(), name="enroll_course"),
     path(
         "courses/<slug:course_slug>/lessons",
         LessonsListView.as_view(),

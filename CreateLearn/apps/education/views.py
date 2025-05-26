@@ -1,6 +1,7 @@
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import ListView, TemplateView, FormView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
@@ -14,7 +15,7 @@ from rest_framework import status
 from .serializers import AddStudentsSerializer, RemoveUsersSerializer
 
 from .models import Course, Lesson, LessonPage
-from .utils import SearchView, TeacherLoginRequired
+from .utils import SearchView, CustomLoginRequired
 from .forms import CourseForm, CoursePeekForm, SearchCourseForm, AddUsersToCourseForm
 
 User = get_user_model()
@@ -33,14 +34,22 @@ class CoursesListView(SearchView):
 
 class CourseDetailView(DetailView):
     model = Course
-    template_name = "test/course_detail.html"
+    template_name = "education/cart.html"
     context_object_name = "course"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        object = context["object"]
-        context.update({"lessons": object.lessons.all()})
-        return context
+
+class CourseEnrollView(CustomLoginRequired, DetailView):
+    model = Course
+    account_type = "student"
+
+    def get(self, request, *args, **kwargs):
+        course = self.get_object()
+        course.students.add(request.user)
+        return redirect("home")  # TODO: redirect на прохождение курса
+
+
+class CourseDetailExample(TemplateView):
+    template_name = "examples/cart.html"
 
 
 class LessonsListView(ListView):
@@ -75,7 +84,7 @@ class LessonDetailView(DetailView):
         return lesson
 
 
-class ConstructorCoursesView(TeacherLoginRequired, ListView):
+class ConstructorCoursesView(CustomLoginRequired, ListView):
     model = Course
     template_name = "teach_course/teach_course1.html"
     context_object_name = "courses"
@@ -97,7 +106,7 @@ class ConstructorCoursesView(TeacherLoginRequired, ListView):
         return queryset.select_related("creator__teacher", "category")
 
 
-class CreateCourseView(TeacherLoginRequired, SuccessMessageMixin, CreateView):
+class CreateCourseView(CustomLoginRequired, SuccessMessageMixin, CreateView):
     model = Course
     template_name = "teach_course/setting_course.html"
     form_class = CourseForm
@@ -109,7 +118,7 @@ class CreateCourseView(TeacherLoginRequired, SuccessMessageMixin, CreateView):
         return super().form_valid(form)
 
 
-class TeacherSettingsCourse(TeacherLoginRequired, SuccessMessageMixin, UpdateView):
+class TeacherSettingsCourse(CustomLoginRequired, SuccessMessageMixin, UpdateView):
     model = Course
     template_name = "teach_course/setting_course.html"
     form_class = CourseForm
@@ -121,7 +130,7 @@ class TeacherSettingsCourse(TeacherLoginRequired, SuccessMessageMixin, UpdateVie
         return reverse_lazy("teach_setting_course", kwargs={"slug": slug})
 
 
-class TeacherCreateTasks(TeacherLoginRequired, ListView):
+class TeacherCreateTasks(CustomLoginRequired, ListView):
     model = LessonPage
     template_name = "teach_course/teach_create_tasks.html"
     context_object_name = "pages"
@@ -143,7 +152,7 @@ class TeacherCreateTasks(TeacherLoginRequired, ListView):
         return queryset.all()
 
 
-class UsersPerCourseView(TeacherLoginRequired, SuccessMessageMixin, ListView):
+class UsersPerCourseView(CustomLoginRequired, SuccessMessageMixin, ListView):
     model = User
     template_name = "test/test_list.html"
     context_object_name = "users"

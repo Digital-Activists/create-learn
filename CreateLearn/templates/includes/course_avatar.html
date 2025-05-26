@@ -1,0 +1,4 @@
+{% load static %}
+<img src="{% if course.avatar %}{{ course.avatar.url }}{% else %}{% static 'img/лого.png' %}{% endif %}"
+     class="course-image"
+     alt="{{ course.title }}" />

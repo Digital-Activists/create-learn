@@ -24,9 +24,11 @@ class SearchView(ListView):
         return context
 
 
-class TeacherLoginRequired(LoginRequiredMixin):
+class CustomLoginRequired(LoginRequiredMixin):
+    account_type = "teacher"
+
     def dispatch(self, request, *args, **kwargs):
         response = super().dispatch(request, *args, **kwargs)
-        if request.user.is_authenticated and not hasattr(request.user, "teacher"):
+        if request.user.is_authenticated and not hasattr(request.user, self.account_type):
             return redirect("home")
         return response
