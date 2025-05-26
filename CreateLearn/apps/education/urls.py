@@ -24,6 +24,7 @@ from .views import (
     TeacherCreateTasks,
     TeacherSettingsCourse,
     UsersPerCourseView,
+    card_teach,
 )
 
 router = DefaultRouter()
@@ -68,4 +69,5 @@ urlpatterns = [
         name="teach_setting_course",
     ),
     path("constructor/students", UsersPerCourseView.as_view(), name="users_per_course"),
+    path("constructor/card", card_teach, name="card_teach"),
 ]

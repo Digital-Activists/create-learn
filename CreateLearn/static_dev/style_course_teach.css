@@ -443,3 +443,151 @@
     border: 3px solid #CBCBCB;
     border-radius: 15px;
 }
+
+
+.lesson{
+    border: 2px solid #CBCBCB;
+    border-radius: 15px;
+    padding: 2%;
+    display: flex;
+    justify-content: space-between;
+    height: fit-content;
+    width: -moz-available;
+    margin-top: 2%;
+}
+
+.lesson-info-2{
+    display: block ruby;
+}
+
+.add-card{
+    height: fit-content;
+    width: -moz-available;
+    padding-right: 10%;
+}
+
+.button-add{
+    text-align: center;
+    margin-top: 3%;
+    display: flex;
+    gap: 2%;
+    justify-content: center;
+}
+
+.button-add-test {
+    font-size: 24px;
+    font-weight: 500;
+    background-color: #fff;
+    border: solid 2px #7359D9;
+    border-radius: 15px;
+    padding: 5px 5%;
+    width: 45%;
+    transition: 1s;
+    outline: 0 !important;
+}
+
+.button-add-test:hover{
+    background-color:#7359D9;
+    color: #fff;
+}
+
+.button-lesson{
+    background: none;
+    border: none;
+    outline: 0 !important;
+}
+
+.question, .term {
+    border: 1px solid #c58e6b;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.question {
+    border-color: #c58e6b;
+    background: #fff7f0;
+}
+
+.term {
+    border-color: #7a7aff;
+    background: #f0f0ff;
+}
+
+.question-header, .term-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.question-number {
+    color: #555;
+}
+
+.score {
+    color: #c58e6b;
+    cursor: pointer;
+}
+
+.score.term {
+    color: #7a7aff;
+}
+
+.close-btn {
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    color: #aaa;
+    border: none;
+    background: none;
+}
+
+.question input[type="text"],
+.term input[type="text"],
+.term textarea {
+    width: 100%;
+    padding: 6px 8px;
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
+.answers label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    cursor: pointer;
+}
+
+.answers input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.add-variant {
+    color: #000;
+    cursor: pointer;
+    user-select: none;
+}
+
+.buttons {
+    display: block ruby;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn.term {
+    width: 50%;
+    color: #000;
+    border: solid 2px #7a7aff;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+.btn.test {
+    width: 50%;
+    color: #000;
+    border: solid 2px #c58e6b;
+    border-radius: 20px;
+    padding: 10px 20px;
+}

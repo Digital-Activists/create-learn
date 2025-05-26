@@ -1,0 +1,87 @@
+{% extends 'teach_course/base_teach_course.html' %}
+{% load static %}
+{% block title %}
+    Конструктор
+{% endblock %}
+
+{% block content %}
+    {% include 'teach_course/constructor_tabs.html' with active_tab='constructor' %}
+    <div style="display: flex; gap: 2%;">
+        <div class="module">
+            <div class="module-section">
+                <div class="module-title">
+                    <h5>ЕГЭ:Праметры</h5>
+                    <button>
+                        <img src="{% static 'img/module1.png' %}" width="25" height="25" style="transform: rotate(90deg);" />
+                        Первый модуль
+                    </button>
+                </div>
+                <button class="add-button purple">+ Занятие</button>
+            </div>
+        </div>
+        <div class="add-card">
+            <div class="lesson">
+                <div class="lesson-info-1">
+                    <h4>Первый урок</h4>
+                </div>
+                <div class="lesson-info-2">
+                    <span><img src="{% static 'img/star.png' %}" width="20px" height="20px"></span>
+                    <p>0 балла</p>
+                    <button class="button-lesson"><span><img src="{% static 'img/pen.png' %}" width="20px" height="20px"></span></button>
+                    <button class="button-lesson"><span><img src="{% static 'img/add.png' %}" width="20px" height="20px"></span></button>
+                    <button class="button-lesson"><span><img src="{% static 'img/delete.png' %}" width="20px" height="20px"></span></button>
+                </div>
+            </div>
+
+            <div class="question" data-id="1">
+                <div class="question-header">
+                    <div class="question-number">1</div>
+                    <div style="display: block ruby;">
+                        <div class="score">☆ 0 балл ✎</div>
+                        <button class="close-btn" aria-label="Удалить вопрос">&times;</button>
+                    </div>
+                    
+                </div>
+                <input type="text" placeholder="Вопрос" />
+                <div class="answers">
+                    <label><input type="checkbox" checked /> Вариант 1</label>
+                    <label><input type="checkbox" /> Вариант 2</label>
+                    <label class="add-variant">+ Добавить вариант</label>
+                </div>
+            </div>
+
+            <div class="question" data-id="2">
+                <div class="question-header">
+                    <div class="question-number">2</div>
+                    <div style="display: block ruby;">
+                        <div class="score">☆ 0 балл ✎</div>
+                        <button class="close-btn" aria-label="Удалить вопрос">&times;</button>
+                    </div>
+                </div>
+                <input type="text" value="Сколько будем 10 * 10?" />
+                <div class="answers">
+                    <label><input type="checkbox" checked /> 100</label>
+                    <label><input type="checkbox" checked /> 10^2</label>
+                    <label class="add-variant">+ Добавить вариант</label>
+                </div>
+            </div>
+
+            <div class="term" data-id="3">
+                <div class="term-header">
+                    <div class="question-number">3</div>
+                    <button class="close-btn" aria-label="Удалить термин">&times;</button>
+                </div>
+                <input type="text" placeholder="Термин" />
+                <textarea rows="4" placeholder="Определение"></textarea>
+            </div>
+
+            <div class="buttons">
+                <button class="btn term">+ Термин-определение</button>
+                <button class="btn test">+ Тест</button>
+            </div>
+        </div>
+    </div>                                    
+</div>
+
+<script src="{% static 'teach_add_card.js' %}"></script>
+{% endblock %}

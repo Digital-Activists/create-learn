@@ -188,3 +188,7 @@ def index(request):
 def about_us(request):
     template_name = "includes/about_us.html"
     return render(request, template_name)
+
+def card_teach(request):
+    template_name = "teach_course/teach_create_card.html"
+    return render(request, template_name)
