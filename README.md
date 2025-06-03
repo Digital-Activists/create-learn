@@ -1,4 +1,4 @@
-<div style="display: flex; justify-content: center; align-items: center;">
+<div style="display: flex; flex-direction: row; align-items: center;">
     <img src="./CreateLearn/static_dev/img/logo.png" width="200">
     <h1>CreateLearn</h1>
 </div>
@@ -8,30 +8,33 @@
 ## Запуск
 
 1. Создать файл `.env`, прописать значения указанные в `.env.example`
-   
+
 2. Создать виртуальное окружение и активировать
-   
+
 ```sh
 python -m venv .venv
 source .venv/bin/activate
 ```
 
 3. Установка зависимостей
+
 ```sh
 pip install -r requirements.txt
 ```
 
 4. Проведение миграций
+
 ```sh
 python manage.py migrate
 ```
 
 5. Запустить сервер
+
 ```sh
 python manage.py runserver
 ```
 
-6. Перейти на сайт по http://127.0.0.1:8000/
+6. Перейти на сайт по <http://127.0.0.1:8000/>
 
 ## Разработка
 

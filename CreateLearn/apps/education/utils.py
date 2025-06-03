@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -32,3 +33,17 @@ class CustomLoginRequired(LoginRequiredMixin):
         if request.user.is_authenticated and not hasattr(request.user, self.account_type):
             return redirect("home")
         return response
+
+
+class GetQuerysetMixin:
+    def get_object_or_queryset(self, filter_func):
+        course_slug = self.kwargs.get("slug")
+        module_order = self.kwargs.get("module")
+        lesson_order = self.kwargs.get("lesson")
+
+        queryset = filter_func(course_slug, module_order, lesson_order)
+
+        if not queryset.exists():
+            raise Http404("Не найден")
+
+        return queryset

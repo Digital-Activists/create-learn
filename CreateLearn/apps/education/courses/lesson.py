@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.urls import reverse
 from django.utils import timezone
 
@@ -42,6 +44,14 @@ class Lesson(models.Model):
         indexes = [
             models.Index(fields=["module", "order"]),
         ]
+
+
+# Присвоение порядкового номера
+@receiver(pre_save, sender=Lesson)
+def set_module_order(sender, instance, **kwargs):
+    if not instance.pk:  # Если объект создается впервые
+        last = Lesson.objects.filter(module=instance.module).order_by("-order").first()
+        instance.order = last.order + 1 if last else 0
 
 
 class UserProgressLesson(models.Model):

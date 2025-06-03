@@ -1,22 +1,26 @@
 from django.http import Http404
 from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
-from django.views import View
-from django.views.generic import ListView, TemplateView, FormView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic import ListView, TemplateView
 from django.views.generic.detail import DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import AddStudentsSerializer, RemoveUsersSerializer
 
-from .models import Course, Lesson, LessonPage
-from .utils import SearchView, CustomLoginRequired
-from .forms import CourseForm, CoursePeekForm, SearchCourseForm, AddUsersToCourseForm
+from .models import Course, Lesson
+from .utils import SearchView, CustomLoginRequired, GetQuerysetMixin
+from .forms import CoursePeekForm, SearchCourseForm
+from .constructor_views import (
+    ConstructorCoursesView,
+    TeacherCreateQuiz,
+    TeacherCreateTasks,
+    TeacherSettingsCourse,
+    CreateCourseView,
+    CreateModuleView,
+    CreateLessonView,
+)
 
 User = get_user_model()
 
@@ -58,98 +62,23 @@ class LessonsListView(ListView):
     context_object_name = "lessons"
 
     def get_queryset(self):
-        course_slug = self.kwargs.get("course_slug")
+        course_slug = self.kwargs.get("slug")
         return Lesson.objects.filter(course__slug=course_slug)
 
 
-class LessonDetailView(DetailView):
+class LessonDetailView(GetQuerysetMixin, DetailView):
     model = Lesson
     template_name = "test/obj_detail.html"
     context_object_name = "lesson"
 
     def get_object(self, queryset=None):
-        course_slug = self.kwargs.get("course_slug")
-        module = self.kwargs.get("module")
-        order = self.kwargs.get("order")
-
-        lesson = Lesson.objects.filter(
-            course__slug=course_slug,
-            module=module,
-            order=order,
-        ).first()
-
-        if not lesson:
-            raise Http404("Урок не найден")
-
-        return lesson
-
-
-class ConstructorCoursesView(CustomLoginRequired, ListView):
-    model = Course
-    template_name = "teach_course/teach_course1.html"
-    context_object_name = "courses"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        categories = {}
-
-        for course in context["courses"]:
-            if course.category not in categories:
-                categories[course.category] = []
-            categories[course.category].append(course)
-
-        context.update({"categories": categories})
-        return context
-
-    def get_queryset(self):
-        queryset = Course.objects.filter(creator=self.request.user)
-        return queryset.select_related("creator__teacher", "category")
-
-
-class CreateCourseView(CustomLoginRequired, SuccessMessageMixin, CreateView):
-    model = Course
-    template_name = "teach_course/setting_course.html"
-    form_class = CourseForm
-    success_url = reverse_lazy("teach_create_tasks")
-    success_message = "Курс успешно создан"
-
-    def form_valid(self, form):
-        form.instance.creator = self.request.user
-        return super().form_valid(form)
-
-
-class TeacherSettingsCourse(CustomLoginRequired, SuccessMessageMixin, UpdateView):
-    model = Course
-    template_name = "teach_course/setting_course.html"
-    form_class = CourseForm
-    success_message = "Курс обновлен"
-    context_object_name = "course"
-
-    def get_success_url(self):
-        slug = self.kwargs.get("slug")  # или self.object.slug
-        return reverse_lazy("teach_setting_course", kwargs={"slug": slug})
-
-
-class TeacherCreateTasks(CustomLoginRequired, ListView):
-    model = LessonPage
-    template_name = "teach_course/teach_create_tasks.html"
-    context_object_name = "pages"
-
-    def get_queryset(self):
-        course_slug = self.kwargs.get("slug")
-        module_order = self.kwargs.get("module")
-        lesson_order = self.kwargs.get("lesson")
-
-        queryset = LessonPage.objects.filter(
-            lesson__module__course__slug=course_slug,
-            lesson__module__order=module_order,
-            lesson__order=lesson_order,
-        ).prefetch_related("attachments")
-
-        if not queryset.exists():
-            raise Http404("Урок не найден")
-
-        return queryset.all()
+        return self.get_object_or_queryset(
+            lambda course_slug, module, order: Lesson.objects.filter(
+                course__slug=course_slug,
+                module=module,
+                order=order,
+            ),
+        )
 
 
 class UsersPerCourseView(CustomLoginRequired, SuccessMessageMixin, ListView):
@@ -196,8 +125,4 @@ def index(request):
 
 def about_us(request):
     template_name = "includes/about_us.html"
-    return render(request, template_name)
-
-def card_teach(request):
-    template_name = "teach_course/teach_create_card.html"
     return render(request, template_name)

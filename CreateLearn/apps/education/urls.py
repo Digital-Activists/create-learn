@@ -1,32 +1,34 @@
 from django.urls import include, path
-from rest_framework.routers import DefaultRouter
 from django.views.generic.base import RedirectView
+from rest_framework.routers import DefaultRouter
 
-from .courses.views import (
+from .courses.view_sets import (
     CourseViewSet,
-    LessonPageViewSet,
-    ModuleViewSet,
-    LessonViewSet,
-    PageAttachmentViewSet,
     FlashCardsDeckViewSet,
     FlashCardViewSet,
+    LessonPageViewSet,
+    LessonViewSet,
+    ModuleViewSet,
+    PageAttachmentViewSet,
 )
 from .views import (
     AddStudentsAPIView,
-    CourseEnrollView,
+    ConstructorCoursesView,
     CourseDetailExample,
     CourseDetailView,
+    CourseEnrollView,
     CoursesListView,
+    CreateCourseView,
+    CreateModuleView,
+    CreateLessonView,
     LessonDetailView,
     LessonsListView,
-    ConstructorCoursesView,
-    index,
-    about_us,
-    CreateCourseView,
+    TeacherCreateQuiz,
     TeacherCreateTasks,
     TeacherSettingsCourse,
     UsersPerCourseView,
-    card_teach,
+    about_us,
+    index,
 )
 
 router = DefaultRouter()
@@ -50,12 +52,12 @@ urlpatterns = [
     path("courses/<slug:slug>", CourseDetailView.as_view(), name="course_details"),
     path("courses/<slug:slug>/enroll", CourseEnrollView.as_view(), name="enroll_course"),
     path(
-        "courses/<slug:course_slug>/lessons",
+        "courses/<slug:slug>/lessons",
         LessonsListView.as_view(),
         name="course_lessons",
     ),
     path(
-        "courses/<slug:course_slug>/module/<int:module>/lesson/<int:order>",
+        "courses/<slug:slug>/module/<int:module>/lesson/<int:lesson>",
         LessonDetailView.as_view(),
         name="lesson_details",
     ),
@@ -63,6 +65,16 @@ urlpatterns = [
     path("constructor", RedirectView.as_view(pattern_name="my_courses")),
     path("constructor/my-courses", ConstructorCoursesView.as_view(), name="my_courses"),
     path("constructor/create", CreateCourseView.as_view(), name="teach_course_create"),
+    path(
+        "constructor/<slug:slug>/new-module",
+        CreateModuleView.as_view(),
+        name="teach_create_module",
+    ),
+    path(
+        "constructor/<slug:slug>/module/<int:module>/new-lesson",
+        CreateLessonView.as_view(),
+        name="teach_create_lesson",
+    ),
     path(
         "constructor/<slug:slug>/module/<int:module>/lesson/<int:lesson>",
         TeacherCreateTasks.as_view(),
@@ -74,5 +86,9 @@ urlpatterns = [
         name="teach_setting_course",
     ),
     path("constructor/students", UsersPerCourseView.as_view(), name="users_per_course"),
-    path("constructor/card", card_teach, name="card_teach"),
+    path(
+        "constructor/<slug:slug>/module/<int:module>/lesson/<int:lesson>/quiz",
+        TeacherCreateQuiz.as_view(),
+        name="card_teach",
+    ),
 ]
