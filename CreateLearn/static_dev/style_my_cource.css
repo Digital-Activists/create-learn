@@ -1,0 +1,647 @@
+#catalogBody{
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+/* МОИ КУРСЫ*/
+.layout {
+  display: flex;
+  min-height: calc(100vh - 140px); /* 80 header + 60 footer */
+}
+
+.sidebar {
+  width: 260px;
+  background-color: #fff;
+  border-right: none; 
+  padding-top: 310px;
+
+}
+
+.sidebar-item {
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+  color: #1C154E;
+  font-family: Montserrat;
+  font-size: 18px;
+  background-color: #e7e5e5;
+  border: none;
+  width: 260px;
+  height: 130px;
+}
+
+.sidebar-item.active {
+  background-color: #ded1f3;
+  color: #1C154E;
+  width: 260px;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 40px 40px 40px 0; /* УБРАЛ левый отступ */
+  display: flex;
+  justify-content: flex-start; 
+}
+
+.courses-section {
+  background-color: white;
+  border-radius: 80px;
+  border: 1px solid #ccc;
+  padding: 30px 60px;
+  width: 100%; /* Увеличили ширину */
+  max-width: 2500px;
+}
+
+.courses-section h3{
+    font-family: Montserrat;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.title-with-line {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 50px;
+  margin-top: 20px;
+}
+
+.title-with-line h2 {
+  color: #1C154E;
+  font-family: Montserrat Alternates;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.title-with-line .line {
+  flex-grow: 1;
+  height: 2px;
+  background-color: #3a2174;
+}
+
+.course-card_1 {
+    background-color: #fff;
+    border-bottom-left-radius: 20px;  
+    overflow: hidden;
+    width: 416px;
+    height: 236px;
+    border: 1px solid #CBCBCB;
+    display: grid;                   
+    grid-template-columns: 1fr 1fr;     
+    grid-template-rows: auto auto;
+    margin-bottom: 50px; 
+}
+
+.course-card_1 img {
+    width: 100%;
+    height: 94px;
+    width: 94px;
+    object-fit: cover;
+    display: flex; 
+    justify-content: center;  
+    align-items: center;  
+    margin: 15px;
+}
+
+.course-info_1 {
+    padding: 10px;
+    grid-column: 2;              
+    grid-row: 1;  
+    width: 280px; 
+    position: relative;    
+}
+
+.course-info_1 h3 {
+    font-family: Montserrat Alternates;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.course-info_1 p {
+    font-family: Montserrat Alternates;
+    font-size: 15px;
+    margin-bottom: 3px;
+}
+
+.enroll-button_2 {
+    font-family: Montserrat;
+    font-size: 20px;
+    background-color: #F28B57;
+    display: inline-block;
+    border: none;
+    color: #fff;
+    border-radius: 20px;
+    width: 187px;
+    height: 31px;
+    grid-column: 1 / span 2;      
+    grid-row: 2;     
+    margin-left: 20px;
+    cursor: pointer;            
+}
+
+.enroll-button_2:hover {
+    background-color: #e07a4b;
+}
+.course-footer_1 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #000000;
+    font-size: 16px;
+    gap: 10px;
+    grid-column: 1 / span 2;      
+    grid-row: 2; 
+    display: flex;         
+    justify-content: flex-end; 
+    align-items: center; 
+    margin-right: 10px; 
+}
+
+.rating {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.status {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 5px 10px;
+  font-size: 13px;
+  border-radius: 5px;
+}
+
+.status.finished {
+    font-family: Montserrat;
+    font-size: 16px;
+    background-color: #F28B57;
+    border: none;
+    color: #fff;
+    border-radius: 20px;
+    width: 150px;
+    height: 37px;
+    margin-top: 30px;
+    cursor: pointer;
+    justify-content: center;  
+    align-items: center; 
+}
+
+.continue-button {
+    font-family: Montserrat;
+    font-size: 16px;
+    background-color: #F28B57;
+    border: none;
+    color: #fff;
+    border-radius: 20px;
+    width: 230px;
+    height: 37px;
+    margin-top: 30px;
+    cursor: pointer;
+    justify-content: center;  
+    align-items: center; 
+}
+/* МОИ КУРСЫ- КОНСПЕКТ*/
+ .course-sidebar {
+    float: right;
+    width: 250px;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-left: 20px;
+}
+.lesson {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+.lesson:hover {
+    background-color: #e5e5ff;
+}
+.lesson-content {
+    margin-right: 20px;
+}
+.lesson-block {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.course-materials { display: none; }
+.lesson-menu button.active { font-weight: bold; }
+.video-container iframe { width: 100%; height: 360px; border: none; }
+  .lessons-panel {
+    display: none;
+    flex-direction: row;
+    margin-top: 30px;
+    justify-content: space-between;
+  gap: 24px;
+  margin-top: 30px;
+  align-items: flex-start; /* <--- Это важно */
+}
+  
+
+  .lessons-sidebar-wrapper {
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #f4f4ff;
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .sidebar-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-family: "Montserrat", sans-serif;
+  }
+
+  .lessons-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .lesson-item {
+    background-color: white;
+    color: #6b6ac2;
+    border: 1px solid #6f6dc2;
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .lesson-item:hover {
+    border-color: #6f6dc2;
+  }
+
+  .lesson-item.active {
+    background-color: white;
+    color: #6f6dc2;
+    border-color: #2826bd;
+    font-weight: 600;
+  }
+
+  .lesson-points {
+    font-size: 14px;
+    color: #555;
+  }
+
+  .lesson-content {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #CBCBCB;
+    min-height: 300px;
+    font-family: "Montserrat", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+.lesson-content h5 {
+  color: #6f6dc2;; /* Пример: насыщенный синий */
+  margin-bottom: 22px;
+  font-family: Montserrat Alternates;
+}
+.lesson-content video {
+    max-width: 100%;
+    margin: 20px 0;
+    border-radius: 12px;
+  }
+  .lesson-content img{
+    
+  }
+
+  .course-card_1 {
+    transition: all 0.3s ease;
+  }
+
+  .lesson-item span:last-child {
+    color: #6b6ac2; /* Золотая звезда */
+    font-weight: 200;
+}
+.lesson-list {
+    margin-top: 30px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    background: #f9f9f9;
+}
+
+.lessons-panel {
+  display: none;
+  flex-direction: row;
+  margin-top: 30px;
+  gap: 30px;
+}
+
+
+.lessons-sidebar {
+  width: 350px;
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  flex: none; /* <--- Убирает зависимость от левого контента */
+  border: 1px solid #CBCBCB;
+  font-family: Montserrat Alternates;
+}
+
+.lessons-sidebar h4 {
+    font-family: Montserrat Alternates;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.lesson-item {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-family: Montserrat;
+  font-size: 14px;
+}
+
+.lesson-item.active {
+  background-color: #e6e6ff;
+  font-weight: 600;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  gap: 10px;
+}
+.pagination-controls .btn {
+  padding: 8px 16px;
+  font-family: Montserrat;
+  font-size: 18px;
+  display: inline-block;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+#prevPage {
+  background-color: #ffffff;
+  border: 1px solid #F28B57;
+  color: #333;
+}
+#nextPage {
+  background-color: #F28B57;
+  border: none;
+  color: white;
+}
+.lesson-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 24px 24px 24px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  font-family: Montserrat Alternates;
+}
+
+.lesson-image-block {
+  flex: 1 1 200px;
+  display: flex;
+  align-items: start;
+}
+
+.styled-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.lesson-text-block {
+  flex: 2 1 480px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #000000;
+}
+
+.lesson-text-block p {
+  margin-bottom: 12px;
+}
+
+.lesson-text-block ul {
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+.lesson-text-block li {
+  margin-bottom: 8px;
+}
+
+.lesson-text-block strong {
+  color: #000000;
+}
+
+.lesson-text-block h6 {
+  margin-top: 20px;
+  font-size: 17px;
+  color: #000000;
+  font-weight: bold;
+}
+/* МОИ КУРСЫ- КАРТОЧКИ*/
+/* Контейнер карточек по центру родителя */
+.practice-flashcards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  font-family: 'Montserrat Alternates', sans-serif;
+  width: 100%;
+}
+
+/* Карточка по центру и с нужным размером */
+.flashcard {
+  width: 100%;
+  max-width: 840px;
+  min-height: 440px;
+  background-color: #fff;
+  border: 1px solid #F28B57;
+  border-radius: 16px;
+  padding: 30px 36px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #000;
+  margin-bottom: 20px;
+  align-self: center; /* Центровка карточки */
+}
+
+/* Вопрос — обычный текст */
+.flashcard-question {
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+/* Ответ */
+.flashcard-answer {
+  display: none;
+  font-style: italic;
+  margin-top: 15px;
+  color: #444;
+}
+
+/* Кнопки внизу справа */
+.flashcard-controls {
+  width: 100%;
+  max-width: 840px;
+  display: flex;
+  justify-content: flex-end; /* Кнопки справа */
+  gap: 20px;
+  margin-top: 20px;
+  align-self: center; /* Центровка по блоку */
+}
+
+/* Кнопки */
+.flashcard-controls button,
+#submit-answer {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 16px;
+  padding: 10px 30px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Цветные кнопки */
+.flashcard-controls .next-card,
+.flashcard-controls .show-answer,
+.flashcard-controls .prev-card,
+#submit-answer {
+  background-color: #F28B57;
+  border: none;
+  color: #fff;
+}
+
+.flashcard-controls button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* Вопрос в тесте */
+.quiz-question {
+  background-color: #fff;
+  padding: 24px;
+  border: 1px solid #F28B57;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 840px;
+  min-height: 440px;
+  align-self: center;
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.quiz-question p {
+  margin-bottom: 16px;
+}
+
+.quiz-question label {
+  display: block;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.course-completed-message {
+  text-align: center;
+  font-size: 24px;
+  margin-top: 50px;
+  color: #F28B57; /* оранжевый стиль */
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-weight: bold;
+  line-height: 1.5;
+}
+/* МОИ КУРСЫ-МОЙ РЕЙТИНГ*/
+.course-selector {
+    margin: 20px 0 70px 50px;
+}
+
+.course-selector label {
+    margin-right: 10px;
+}
+
+.course-selector select {
+    padding: 8px 15px;
+    border-radius: 15px;
+    border: 1px solid #c4c4c4;
+}
+.course-select {
+  color: #a7a5f1;
+}
+
+.rating-table {
+    width: 85%;
+    margin: 20px 0 0 50px;
+    border-radius: 15px;
+    border: 1px solid #eceaea;
+}
+
+.rating-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.rating-table th, .rating-table td {
+    padding: 20px 22px;
+    text-align: left;
+    border-bottom: 1px solid #eceaea;
+}
+/* Стили для имён - жирный шрифт */
+.rating-table td:first-child {
+    font-weight: bold;
+}
+.rating-table th {
+    background-color: #ffffff;
+
+}
+
+/* Медали и цветовые стили */
+.gold {
+    background-color: #F28B57; /* Оранжевый фон */
+    color: #ffffff;
+}
+
+.silver {
+    background-color: #F28B57; /* Серебряный фон */
+    color: #ffffff;
+}
+
+.bronze {
+    background-color: #F28B57; /* Бронзовый фон */
+    color: #ffffff;
+}
+
+
+.fa-medal {
+    margin-right: 10px;
+}
+
+.gold-icon {
+    color: #FFD700; /* Золотой цвет */
+}
+
+.silver-icon {
+    color: #C0C0C0; /* Серебряный цвет */
+}
+
+.bronze-icon {
+    color: #CD7F32; /* Бронзовый цвет */
+}
