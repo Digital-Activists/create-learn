@@ -1,12 +1,11 @@
 {% extends 'teach_course/base_teach_course.html' %}
 {% load static %}
-{% block title %}
-    Конструктор
-{% endblock %}
-
+{% block title %}Конструктор{% endblock %}
 {% block content %}
     {% include 'teach_course/constructor_tabs.html' with active_tab='settings' %}
-    <form style="text-align: center;" method="post" enctype="multipart/form-data">
+    <form style="text-align: center"
+          method="post"
+          enctype="multipart/form-data">
         {% csrf_token %}
         <div class="setting-content">
             <div class="setting-box">
@@ -14,11 +13,9 @@
                     <div class="content-1">
                         <p>Иконка*</p>
                         {% comment %}Скрипт привязан к id="avatar-input-icon"{% endcomment %}
-                        <img id="avatar-input-icon" width="100" src="{% if course.avatar %}
-                            {{ course.avatar.url }}
-                        {% else %}
-                            {% static 'img/image.png' %}
-                        {% endif %}" />
+                        <img id="avatar-input-icon"
+                             width="100"
+                             src="{% if course.avatar %} {{ course.avatar.url }} {% else %} {% static 'img/image.png' %} {% endif %}" />
                         {{ form.avatar }}
                         {{ form.avatar.errors }}
                     </div>
@@ -32,7 +29,10 @@
                     <h5>Данные преподавателя*</h5>
                     <p>(ФИО, квалификация, стаж работы)</p>
                     {% comment %}TODO: Что то с этим сделать{% endcomment %}
-                    <input type="text" style="width: -moz-available; height: 100px;" class="text-footer" />
+                    <input type="text"
+                           style="width: -moz-available;
+                                  height: 100px"
+                           class="text-footer" />
                 </div>
                 <div class="setting-box-1">
                     <div class="content-1" style="margin-top: 6.4%;">
@@ -48,14 +48,13 @@
                     </div>
                 </div>
             </div>
-
             <div class="setting-box-next">
                 <h5>Категория курса*</h5>
                 <p>Выбрать существующую категорию</p>
                 {{ form.category }}
                 {{ form.category.errors }}
                 <p>Создать новую категорию</p>
-                {% comment %}TODO: Создание категорий{% endcomment %}
+                {% comment %}TODO: Создание категорий через REST {% endcomment %}
                 <input type="text" class="text-footer" />
                 <h5 style="margin-top: 2%;">Статус курса</h5>
                 <div class="box-3">
@@ -73,21 +72,21 @@
         </div>
         {% if form.non_field_errors %}
             <div class="form-errors">
-                {% for error in form.non_field_errors %}
-                    <p class="error-message">{{ error }}</p>
-                {% endfor %}
+                {% for error in form.non_field_errors %}<p class="error-message">{{ error }}</p>{% endfor %}
             </div>
         {% endif %}
         {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
-                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    <li {% if message.tags %}class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
-        <button type="submit" class="button-start" style="font-size: 20px;margin-top: -10px;">Сохранить</button>
+        <button type="submit"
+                class="button-start"
+                style="font-size: 20px;
+                       margin-top: -10px">Сохранить</button>
     </form>
-
     <script>
         {% comment %} Скрипт для добавления аватарки  {% endcomment %}
         document.getElementById('avatar-input-icon').addEventListener('click', function () {

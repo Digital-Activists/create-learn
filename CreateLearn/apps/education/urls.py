@@ -11,10 +11,10 @@ from .courses.view_sets import (
     ModuleViewSet,
     PageAttachmentViewSet,
 )
+from .examples_view import RatingExample, MyCoursesStudentExample, CourseDetailExample
 from .views import (
     AddStudentsAPIView,
     ConstructorCoursesView,
-    CourseDetailExample,
     CourseDetailView,
     CourseEnrollView,
     CoursesListView,
@@ -29,7 +29,10 @@ from .views import (
     UsersPerCourseView,
     about_us,
     index,
+    StudentRatingPerCourseView,
+    StudentMyCoursesView,
 )
+
 
 router = DefaultRouter()
 router.register(r"lessons", LessonViewSet)
@@ -40,55 +43,60 @@ router.register(r"page-attachments", PageAttachmentViewSet)
 router.register(r"courses", CourseViewSet)
 router.register(r"modules", ModuleViewSet)
 
+examples = [
+    path("course-card", CourseDetailExample.as_view()),
+    path("my-courses", MyCoursesStudentExample.as_view()),
+    path("rating", RatingExample.as_view()),
+]
+
+constructor = [
+    path("", RedirectView.as_view(pattern_name="my_courses")),
+    path("my-courses", ConstructorCoursesView.as_view(), name="my_courses"),
+    path("create", CreateCourseView.as_view(), name="teach_course_create"),
+    path("<slug:slug>/new-module", CreateModuleView.as_view(), name="teach_create_module"),
+    path(
+        "<slug:slug>/module/<int:module>/new-lesson",
+        CreateLessonView.as_view(),
+        name="teach_create_lesson",
+    ),
+    path(
+        "<slug:slug>/module/<int:module>/lesson/<int:lesson>",
+        TeacherCreateTasks.as_view(),
+        name="teach_create_tasks",
+    ),
+    path("<slug:slug>/setting", TeacherSettingsCourse.as_view(), name="teach_setting_course"),
+    path("students", UsersPerCourseView.as_view(), name="users_per_course"),
+    path(
+        "<slug:slug>/module/<int:module>/lesson/<int:lesson>/quiz",
+        TeacherCreateQuiz.as_view(),
+        name="card_teach",
+    ),
+]
+
+courses = [
+    path("", CoursesListView.as_view(), name="education_courses"),
+    path("<slug:slug>", CourseDetailView.as_view(), name="course_details"),
+    path("<slug:slug>/enroll", CourseEnrollView.as_view(), name="enroll_course"),
+    path("<slug:slug>/lessons", LessonsListView.as_view(), name="course_lessons"),
+    path(
+        "<slug:slug>/module/<int:module>/lesson/<int:lesson>",
+        LessonDetailView.as_view(),
+        name="lesson_details",
+    ),
+]
+
+students = [
+    path("my-courses", StudentMyCoursesView.as_view(), name="student_my_courses"),
+    path("my-rating", StudentRatingPerCourseView.as_view(), name="student_my_rating"),
+]
+
 urlpatterns = [
     path("", index, name="home"),
     path("api/", include(router.urls)),
     path("api/add-delete-students/", AddStudentsAPIView.as_view(), name="api_add_delete_students"),
     path("about_us", about_us, name="education_about_us"),
-    # Examples
-    path("examples/course-card", CourseDetailExample.as_view(), name="course_details"),
-    # Courses
-    path("courses", CoursesListView.as_view(), name="education_courses"),
-    path("courses/<slug:slug>", CourseDetailView.as_view(), name="course_details"),
-    path("courses/<slug:slug>/enroll", CourseEnrollView.as_view(), name="enroll_course"),
-    path(
-        "courses/<slug:slug>/lessons",
-        LessonsListView.as_view(),
-        name="course_lessons",
-    ),
-    path(
-        "courses/<slug:slug>/module/<int:module>/lesson/<int:lesson>",
-        LessonDetailView.as_view(),
-        name="lesson_details",
-    ),
-    # Constructor
-    path("constructor", RedirectView.as_view(pattern_name="my_courses")),
-    path("constructor/my-courses", ConstructorCoursesView.as_view(), name="my_courses"),
-    path("constructor/create", CreateCourseView.as_view(), name="teach_course_create"),
-    path(
-        "constructor/<slug:slug>/new-module",
-        CreateModuleView.as_view(),
-        name="teach_create_module",
-    ),
-    path(
-        "constructor/<slug:slug>/module/<int:module>/new-lesson",
-        CreateLessonView.as_view(),
-        name="teach_create_lesson",
-    ),
-    path(
-        "constructor/<slug:slug>/module/<int:module>/lesson/<int:lesson>",
-        TeacherCreateTasks.as_view(),
-        name="teach_create_tasks",
-    ),
-    path(
-        "constructor/<slug:slug>/setting",
-        TeacherSettingsCourse.as_view(),
-        name="teach_setting_course",
-    ),
-    path("constructor/students", UsersPerCourseView.as_view(), name="users_per_course"),
-    path(
-        "constructor/<slug:slug>/module/<int:module>/lesson/<int:lesson>/quiz",
-        TeacherCreateQuiz.as_view(),
-        name="card_teach",
-    ),
+    path("courses/", include(courses)),
+    path("student/", include(students)),
+    path("examples/", include(examples)),
+    path("constructor/", include(constructor)),
 ]

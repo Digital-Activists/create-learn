@@ -52,10 +52,6 @@ class CourseEnrollView(CustomLoginRequired, DetailView):
         return redirect("home")  # TODO: redirect на прохождение курса
 
 
-class CourseDetailExample(TemplateView):
-    template_name = "examples/cart.html"
-
-
 class LessonsListView(ListView):
     model = Lesson
     template_name = "test/test_list.html"
@@ -96,10 +92,38 @@ class UsersPerCourseView(CustomLoginRequired, SuccessMessageMixin, ListView):
 
         return queryset
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, queryset=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form"] = self.course_form(self.request.GET or None, user=self.request.user)
+        context["form"] = self.course_form(
+            self.request.GET or None,
+            queryset=queryset or Course.objects.filter(creator=self.request.user),
+        )
         return context
+
+
+class StudentRatingPerCourseView(UsersPerCourseView):
+    template_name = "education/rating.html"
+    account_type = "student"
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(
+            queryset=Course.objects.filter(students__in=[self.request.user]), **kwargs
+        )
+
+    def get_queryset(self, queryset=None):
+        course_pk = self.request.GET.get("course")
+
+        if course_pk:
+            return User.objects.filter(enrolled_courses__pk=course_pk)
+        return User.objects.none
+
+
+class StudentMyCoursesView(ConstructorCoursesView):
+    account_type = "student"
+    template_name = "education/my_courses_stud.html"
+
+    def get_queryset(self):
+        return Course.objects.filter(students__in=[self.request.user])
 
 
 class AddStudentsAPIView(APIView):

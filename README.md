@@ -3,9 +3,29 @@
     <h1>CreateLearn</h1>
 </div>
 
+![Django](https://img.shields.io/badge/Django-092E20?logo=django)
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python)
+
 Платформа для людей, желающих учиться, и тех, кто готов делиться знаниями
 
-## Запуск
+## 📸 Скриншоты
+<div align="center">
+  <img src=".github/index.jpg" width="45%" alt="Главная">
+  <img src=".github/profile.webp" width="45%" alt="Настройки профиля">
+  <br>
+  <img src=".github/constructor.webp" width="45%" alt="Список курсов в конструкторе">
+  <img src=".github/edit.webp" width="45%" alt="Редактирование урока">
+  <br>
+  <img src=".github/rating.webp" width="45%" alt="Редактирование урока">
+  <img src=".github/catalog.webp" width="45%" alt="Редактирование урока">
+</div>
+
+## 📱 Технологии
+
+- **Backend**: Django, Django REST Framework
+- **Frontend**: HTML/CSS, JavaScript, Bootstrap
+
+## 🚀 Запуск
 
 1. Создать файл `.env`, прописать значения указанные в `.env.example`
 
@@ -36,7 +56,7 @@ python manage.py runserver
 
 6. Перейти на сайт по <http://127.0.0.1:8000/>
 
-## Разработка
+## 🛠 Разработка
 
 ### Makefile
 
@@ -53,7 +73,7 @@ make reset-and-run
 
 ### Зависимости
 
-Опционально установить из `requirements_dev.txt`
+Опционально установить из `requirements-dev.txt`
 
 ### Для заполнения БД тестовыми данными
 
@@ -66,6 +86,6 @@ python manage.py fill_users_data
 python manage.py fill_education_data
 ```
 
---
+## 📜 Лицензия
 
-Проектный практикум - весна 2025
+Проект распространяется под лицензией [Apache License 2.0](LICENSE).

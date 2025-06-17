@@ -55,15 +55,14 @@ class CoursePeekForm(forms.Form):
     course = forms.ModelChoiceField(
         queryset=Course.objects.none(),
         label="Выберите курс",
-        widget=forms.Select(attrs={}),
-        empty_label="-- Все курсы --",
+        widget=forms.Select(attrs={"id": "course-select"}),
+        empty_label="-- Ваши курсы --",
         required=False,
     )
 
-    def __init__(self, *args, user=None, **kwargs):
+    def __init__(self, *args, queryset=None, **kwargs):
         super().__init__(*args, **kwargs)
-        if user:
-            self.fields["course"].queryset = Course.objects.filter(creator=user)
+        self.fields["course"].queryset = queryset
 
 
 class AddUsersToCourseForm(forms.Form):

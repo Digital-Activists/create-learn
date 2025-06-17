@@ -48,6 +48,7 @@ class CreateCourseView(CustomLoginRequired, SuccessMessageMixin, CreateView):
         return super().form_valid(form)
 
 
+# TODO: Создание объектов с помощью get запросов - нелогично
 class CreateModuleView(CustomLoginRequired, SuccessMessageMixin, DetailView):
     model = Course
 

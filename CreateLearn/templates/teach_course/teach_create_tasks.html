@@ -1,9 +1,6 @@
 {% extends 'teach_course/base_teach_course.html' %}
 {% load static %}
-{% block title %}
-    Конструктор
-{% endblock %}
-
+{% block title %}Конструктор{% endblock %}
 {% block content %}
     {% include 'teach_course/constructor_tabs.html' with active_tab='constructor' %}
     {% for page in pages %}
@@ -11,15 +8,17 @@
             <div>
                 <div class="tasks-head">
                     <button style="margin-top: -3%; rotate: 45deg" class="tasks-head-button">+</button>
-                    <input type="text" placeholder="Заголовок страницы" class="text-header" value="{{ page.title }}" />
+                    <input type="text"
+                           placeholder="Заголовок страницы"
+                           class="text-header"
+                           value="{{ page.title }}" />
                     <div>
                         {% for attachment in page.attachments.all %}
                             {% with file_type=attachment.get_filetype %}
                                 {% comment %}TODO: Здесь надо показывать загруженные attachments, а не пустые input{% endcomment %}
-
                                 {% if file_type == 'image' %}
                                     <div class="video-box">
-                                        <img src="{% static 'img/file.png' %}" width="80px" height="80px" />
+                                        <img src="{{ attachment.file.url }}" width="80px" height="80px" />
                                         <h4 style="margin-top: 3%">Нажмите для загрузки изображения или перетащите файл сюда</h4>
                                         <p>Файл обрабатывается до 20 Мб .jpg .png .webp</p>
                                     </div>
@@ -44,7 +43,10 @@
                                 {% endif %}
                             {% endwith %}
                         {% endfor %}
-                        <input type="text" placeholder="Текст" class="text-footer" value="{{ page.content }}" />
+                        <input type="text"
+                               placeholder="Текст"
+                               class="text-footer"
+                               value="{{ page.content }}" />
                     </div>
                     <button class="dropdownBtn tasks-head-button">...</button>
                     <div class="dropdown-content">
@@ -55,7 +57,6 @@
             </div>
         </div>
     {% endfor %}
-
     {% comment %}
     <div class="conteiner-tasks">
         <div>
@@ -105,7 +106,8 @@
         </div>
     </div>
     {% endcomment %}
-
-    <a href="#" style="margin-left: 40%"><button class="button-create-tasks">+ Добавить страницу</button></a>
+    <a href="#" style="margin-left: 40%">
+        <button class="button-create-tasks">+ Добавить страницу</button>
+    </a>
     <script src="{% static 'teach_create_tasks.js' %}"></script>
 {% endblock %}

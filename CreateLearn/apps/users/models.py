@@ -80,12 +80,12 @@ class Student(models.Model):
 
 class Teacher(models.Model):
     class TeachingExperience(models.TextChoices):
-        LESS_1_YEAR = "0-1", "Менее 1 года"
+        LESS_1_YEAR = "0-1", "менее 1 года"
         YEAR_1_2 = "1-2", "1-2 года"
         YEARS_3_4 = "3-4", "3-4 лет"
         YEARS_5_7 = "5-7", "5-7 лет"
         YEARS_8_10 = "8-10", "8-10 лет"
-        OVER_10 = "10+", "Более 10 лет"
+        OVER_10 = "10+", "более 10 лет"
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="teacher")
     teaching_experience = models.CharField(
