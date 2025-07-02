@@ -1,5 +1,6 @@
 from django.http import Http404
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView
 from django.views.generic.detail import DetailView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -7,7 +8,9 @@ from django.contrib.auth import get_user_model
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.views.generic.base import RedirectView
 from .serializers import AddStudentsSerializer, RemoveUsersSerializer
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Course, Lesson
 from .utils import SearchView, CustomLoginRequired, GetQuerysetMixin
@@ -116,6 +119,15 @@ class StudentRatingPerCourseView(UsersPerCourseView):
         if course_pk:
             return User.objects.filter(enrolled_courses__pk=course_pk)
         return User.objects.none
+
+
+class MyCoursesRedirect(LoginRequiredMixin, RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        if hasattr(self.request.user, "teacher"):
+            return reverse_lazy("teacher_my_courses")
+        elif hasattr(self.request.user, "student"):
+            return reverse_lazy("student_my_courses")
+        return reverse_lazy("home")
 
 
 class StudentMyCoursesView(ConstructorCoursesView):

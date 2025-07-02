@@ -31,6 +31,7 @@ from .views import (
     index,
     StudentRatingPerCourseView,
     StudentMyCoursesView,
+    MyCoursesRedirect,
 )
 
 
@@ -50,8 +51,8 @@ examples = [
 ]
 
 constructor = [
-    path("", RedirectView.as_view(pattern_name="my_courses")),
-    path("my-courses", ConstructorCoursesView.as_view(), name="my_courses"),
+    path("", RedirectView.as_view(pattern_name="teacher_my_courses")),
+    path("my-courses", ConstructorCoursesView.as_view(), name="teacher_my_courses"),
     path("create", CreateCourseView.as_view(), name="teach_course_create"),
     path("<slug:slug>/new-module", CreateModuleView.as_view(), name="teach_create_module"),
     path(
@@ -92,6 +93,7 @@ students = [
 
 urlpatterns = [
     path("", index, name="home"),
+    path("my-courses", MyCoursesRedirect.as_view(), name="my_courses"),
     path("api/", include(router.urls)),
     path("api/add-delete-students/", AddStudentsAPIView.as_view(), name="api_add_delete_students"),
     path("about_us", about_us, name="education_about_us"),

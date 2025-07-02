@@ -74,9 +74,9 @@ class SettingsSecurityView(SuccessMessageMixin, LoginRequiredMixin, TemplateView
 
 class SettingsProfileRedirectView(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
-        if self.request.user.teacher:
+        if hasattr(self.request.user, "teacher"):
             return reverse_lazy("settings_profile_teacher")
-        if self.request.user.student:
+        elif hasattr(self.request.user, "student"):
             return reverse_lazy("settings_profile_student")
         return reverse_lazy("home")
 
